@@ -1,12 +1,5 @@
 import types from './types';
 
-export function updateWeb3Status(payload) {
-  return {
-    type: types.UPDATE_WEB3_STATUS,
-    payload,
-  };
-}
-
 export function getIPFSStatus(payload){
   return {
     type: types.IPFS_STATUS,
@@ -43,5 +36,9 @@ export function IPFS_ready(payload){
 }
 
 export default {
-  IPFS_actions,
-};
+  getIPFSStatus,
+  catFromIPFS,
+  addToIPFS,
+  IPFS_reqPending,
+  IPFS_ready
+}
