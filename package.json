@@ -1,0 +1,29 @@
+{
+  "name": "IPFS-Redux",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crazyrabbitLTC/IPFS-Redux.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/crazyrabbitLTC/IPFS-Redux/issues"
+  },
+  "homepage": "https://github.com/crazyrabbitLTC/IPFS-Redux#readme",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "ipfs": "^0.32.2",
+    "koa": "^2.5.3",
+    "nodemon": "^1.18.4",
+    "orbit-db": "^0.19.9",
+    "react": "^16.5.2",
+    "react-redux": "^5.0.7"
+  }
+}
