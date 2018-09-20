@@ -6,6 +6,7 @@ const app = new Koa();
 const router = new Router();
 const IPFS = require('ipfs');
 const ipfs = new IPFS();
+const OrbitDB = require('orbit-db')
 
 const promisedIpfsPut = require('./utils/promisedIpfsPut');
 const promisedIpfsData = require('./utils/promisedData');
