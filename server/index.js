@@ -1,19 +1,30 @@
 const chalk = require('chalk');
+
 const Koa = require('koa');
+const Router = require('koa-router');
+var bodyParser = require('koa-bodyparser');
 const app = new Koa();
+const router = new Router();
+
 const IPFS = require('ipfs');
 const ipfs = new IPFS();
+const OrbitDB = require('orbit-db');
+const ipfsOptions = { EXPERIMENTAL: { pubsub: true } };
 
 const promisedIpfsPut = require('./utils/promisedIpfsPut');
 const promisedIpfsData = require('./utils/promisedData');
 
+ipfs.on('error', (e) => console.log("IPFS ERROR ", e))
 ipfs.on('ready', () => {
-	console.log(chalk.blue.bgWhite.bold('IPFS READY'));
+	console.log(chalk.green.bgWhite.bold('IPFS READY'));
+	const orbitdb = new OrbitDB(ipfs)
+
 });
 
 //Attach the IPFS instance to the Koa context
 app.context.ipfs = ipfs;
 
+// x-response-time
 app.use(async (ctx, next) => {
 	await next();
 	const rt = ctx.response.get('X-Response-Time');
@@ -21,7 +32,6 @@ app.use(async (ctx, next) => {
 });
 
 // x-response-time
-
 app.use(async (ctx, next) => {
 	const start = Date.now();
 	await next();
@@ -29,28 +39,36 @@ app.use(async (ctx, next) => {
 	ctx.set('X-Response-Time', `${ms}ms`);
 });
 
-//Read via the query the object at the Hash Location
-app.use(async (ctx, next) => {
-  await next();
+app.use(bodyParser());
 
-  const data = await promisedIpfsData(ctx.request.query.hash, ctx);
-
-  const hashLocation = data.toString();
+router.get('IPFS_QUERY_STRING', '/api', async (ctx) => {
+	const data = await promisedIpfsData(ctx.request.query.hash, ctx);
+	ctx.body = data.toString();
 });
 
-// Create a DAG IPFS object
-app.use(async (ctx, next) => {
-  await next();
+router.put('IPFS_QUERY_STRING', '/api', async (ctx) => {
+	if (ctx.request.query) {
+		const obj = {
+			Data: new Buffer.from(JSON.stringify(ctx.request.query)),
+			Links: []
+		};
 
-	const obj = {
-		Data: new Buffer.from(JSON.stringify(ctx.request.query)),
-		Links: []
-	};
+		const example = await promisedIpfsPut(obj, ctx);
+		ctx.body = example.toJSON().multihash;
+	}
 
-	const example = await promisedIpfsPut(obj, ctx);
+	// if (ctx.request.body) {
+	// 	const obj = {
+	// 		Data: new Buffer.from(JSON.stringify(ctx.request.body)),
+	// 		Links: []
+	// 	};
 
-	// ctx.state.example = example.toJSON().multihash;
+	// 	const example = await promisedIpfsPut(obj, ctx);
+	// 	ctx.body = example.toJSON().multihash;
+	// }
 });
+
+app.use(router.routes()).use(router.allowedMethods());
 
 app.listen(3000);
 console.log(chalk.bgBlue('Koa Server on port 3000'));
