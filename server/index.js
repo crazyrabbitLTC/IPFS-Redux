@@ -1,6 +1,7 @@
 const chalk = require('chalk');
 const Koa = require('koa');
 const Router = require('koa-router');
+var bodyParser = require('koa-bodyparser');
 const app = new Koa();
 const router = new Router();
 const IPFS = require('ipfs');
@@ -31,20 +32,33 @@ app.use(async (ctx, next) => {
 	ctx.set('X-Response-Time', `${ms}ms`);
 });
 
-router.get('koala', '/api', async (ctx) => {
-	const data = await promisedIpfsData(ctx.request.query.hash, ctx);
+app.use(bodyParser());
 
+router.get('IPFS_QUERY_STRING', '/api', async (ctx) => {
+	const data = await promisedIpfsData(ctx.request.query.hash, ctx);
 	ctx.body = data.toString();
 });
 
-router.put('koala', '/api', async (ctx) => {
-	const obj = {
-		Data: new Buffer.from(JSON.stringify(ctx.request.query)),
-		Links: []
-	};
+router.put('IPFS_QUERY_STRING', '/api', async (ctx) => {
+	if (ctx.request.query) {
+		const obj = {
+			Data: new Buffer.from(JSON.stringify(ctx.request.query)),
+			Links: []
+		};
 
-	const example = await promisedIpfsPut(obj, ctx);
-	ctx.body = example.toJSON().multihash;
+		const example = await promisedIpfsPut(obj, ctx);
+		ctx.body = example.toJSON().multihash;
+	}
+
+	// if (ctx.request.body) {
+	// 	const obj = {
+	// 		Data: new Buffer.from(JSON.stringify(ctx.request.body)),
+	// 		Links: []
+	// 	};
+
+	// 	const example = await promisedIpfsPut(obj, ctx);
+	// 	ctx.body = example.toJSON().multihash;
+	// }
 });
 
 app.use(router.routes()).use(router.allowedMethods());
