@@ -6,9 +6,10 @@ import './index.css';
 import App from './App';
 import { store } from './state/store';
 import { updateWeb3Status } from './state/web3/actions';
+import {IPFS_ready} from './state/IPFS/actions';
 import registerServiceWorker from './registerServiceWorker';
 
-import IPFSNODE from './ipfs.js'
+import IPFSNODE from './ipfs'
 
 ReactDOM.render(
   <Provider store={store}>
@@ -23,5 +24,8 @@ window.addEventListener('load', () => {
   const hasWeb3 = typeof window.web3 !== 'undefined';
   const web3 = hasWeb3 ? new Eth(window.web3.currentProvider) : null;
   console.log("THI SIS THE IPFS NODE", IPFSNODE);
+  IPFSNODE.once('ready', ()=> {
+    store.dispatch(IPFS_ready(true));
+  })
   store.dispatch(updateWeb3Status(web3));
 });

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import Demo from '../components/Demo';
+import Demo from '../components/IPFS_status';
 
 function mapState(state) {
   return {
