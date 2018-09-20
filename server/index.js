@@ -4,15 +4,17 @@ const app = new Koa();
 const IPFS = require('ipfs');
 const ipfs = new IPFS();
 
-const promisedNode = require('./utils/promisedNode');
+const promisedIpfsPut = require('./utils/promisedIpfsPut');
+const promisedIpfsData = require('./utils/promisedData');
+
 ipfs.on('ready', () => {
 	console.log(chalk.blue.bgWhite.bold('IPFS READY'));
 });
 
+//Attach the IPFS instance to the Koa context
 app.context.ipfs = ipfs;
 
 app.use(async (ctx, next) => {
-	ctx.state.user = 'mike';
 	await next();
 	const rt = ctx.response.get('X-Response-Time');
 	console.log(`${ctx.method} ${ctx.url} - ${rt}`);
@@ -24,11 +26,16 @@ app.use(async (ctx, next) => {
 	const start = Date.now();
 	await next();
 	const ms = Date.now() - start;
-  ctx.set('X-Response-Time', `${ms}ms`);
-
-  console.log("this!", ctx.state.example);
+	ctx.set('X-Response-Time', `${ms}ms`);
 });
 
+app.use(async (ctx, next) => {
+	await next();
+
+  const data = await promisedIpfsData(ctx.request.query.hash, ctx);
+
+		ctx.body = data.toString();
+});
 
 // response
 app.use(async (ctx, next) => {
@@ -39,29 +46,10 @@ app.use(async (ctx, next) => {
 		Links: []
 	};
 
-	const example = await promisedNode(obj, ctx);
+	const example = await promisedIpfsPut(obj, ctx);
 
 	ctx.state.example = example.toJSON().multihash;
 });
 
-app.use(async (ctx) => {
-	// ipfs.object.data(hash, (err, data) => {
-	// 	if (err) {
-	// 		throw err;
-	// 	}
-	// 	console.log('Getting the data back', data.toString());
-	// 	// Logs:
-	// 	// some data
-  // });
-
-});
-
 app.listen(3000);
 console.log(chalk.bgBlue('Koa Server on port 3000'));
-
-//Lets use this to attach the IPFS and OrbitDB instance to APP
-// app.context.db = db();
-
-// app.use(async ctx => {
-//   console.log(ctx.db);
-// });

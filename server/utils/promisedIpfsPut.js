@@ -1,4 +1,4 @@
-function promisedNode(obj, ctx) {
+function promisedIpfsPut(obj, ctx) {
 	return new Promise((resolve, reject) => {
 		ctx.ipfs.object.put(obj, (err, node) => {
 			if (err) {
@@ -9,5 +9,5 @@ function promisedNode(obj, ctx) {
   });
 }
 
-module.exports = promisedNode;
+module.exports = promisedIpfsPut;
 
