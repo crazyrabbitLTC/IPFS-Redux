@@ -5,5 +5,5 @@ import { IPFSReducer } from './IPFS/reducers';
 
 export default combineReducers({
   web3: web3Reducer,
-  ipfs: IPFSReducer,
+  IPFS: IPFSReducer,
 });
