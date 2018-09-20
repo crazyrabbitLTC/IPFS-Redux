@@ -29,26 +29,27 @@ app.use(async (ctx, next) => {
 	ctx.set('X-Response-Time', `${ms}ms`);
 });
 
+//Read via the query the object at the Hash Location
 app.use(async (ctx, next) => {
-	await next();
+  await next();
 
   const data = await promisedIpfsData(ctx.request.query.hash, ctx);
 
-		ctx.body = data.toString();
+  const hashLocation = data.toString();
 });
 
-// response
+// Create a DAG IPFS object
 app.use(async (ctx, next) => {
-	await next();
+  await next();
 
 	const obj = {
-		Data: new Buffer(JSON.stringify(ctx.request.query)),
+		Data: new Buffer.from(JSON.stringify(ctx.request.query)),
 		Links: []
 	};
 
 	const example = await promisedIpfsPut(obj, ctx);
 
-	ctx.state.example = example.toJSON().multihash;
+	// ctx.state.example = example.toJSON().multihash;
 });
 
 app.listen(3000);
