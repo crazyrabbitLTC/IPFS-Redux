@@ -13,12 +13,12 @@ export function Home(props) {
 
 Home.propTypes = {
   web3: PropTypes.object,
-  message: PropTypes.string
+  message: PropTypes.object
 };
 
 Home.defaultProps = {
   web3: null,
-  message: "loading"
+  message: {message: "empty"}
 };
 
 export default Home;

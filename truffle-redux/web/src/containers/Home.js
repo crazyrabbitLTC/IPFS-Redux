@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Home from '../components/Home';
 
 function mapState(state) {
+  console.log("LOG FROM HOME CONTAINER", state.web3.web3)
   return {
     web3: state.web3.web3,
   };
