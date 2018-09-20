@@ -1,18 +1,24 @@
 const chalk = require('chalk');
+
 const Koa = require('koa');
 const Router = require('koa-router');
 var bodyParser = require('koa-bodyparser');
 const app = new Koa();
 const router = new Router();
+
 const IPFS = require('ipfs');
 const ipfs = new IPFS();
-const OrbitDB = require('orbit-db')
+const OrbitDB = require('orbit-db');
+const ipfsOptions = { EXPERIMENTAL: { pubsub: true } };
 
 const promisedIpfsPut = require('./utils/promisedIpfsPut');
 const promisedIpfsData = require('./utils/promisedData');
 
+ipfs.on('error', (e) => console.log("IPFS ERROR ", e))
 ipfs.on('ready', () => {
-	console.log(chalk.blue.bgWhite.bold('IPFS READY'));
+	console.log(chalk.green.bgWhite.bold('IPFS READY'));
+	const orbitdb = new OrbitDB(ipfs)
+
 });
 
 //Attach the IPFS instance to the Koa context
