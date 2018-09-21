@@ -2,6 +2,9 @@ import types from './types';
 
 const initialState = {
   web3: null,
+  user: [],
+  userBalance: "",
+  isFetching: false
 };
 
 export function web3Reducer(state = initialState, action) {
@@ -11,6 +14,21 @@ export function web3Reducer(state = initialState, action) {
         ...state,
         web3: action.payload,
       };
+    case types.SET_USER_ACCOUNTS:
+    return {
+      ...state,
+      user: action.accounts
+    }
+    case types.SET_USER_BALANCE:
+    return {
+      ...state,
+      userBalance: action.userBalance
+    }
+    case types.SET_WEB3_FETCH:
+    return {
+      ...state,
+      isFetching: action.isFetching
+    }
     default:
       return state;
   }

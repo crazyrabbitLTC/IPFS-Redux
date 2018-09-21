@@ -37,18 +37,27 @@ export function IPFS_ready(payload){
 }
 
 export function getFromIPFS_THUNK(query){
-  return dispatch => {
-    IPFSNODE.files.add()
+  return (dispatch) => {
+    IPFSNODE.files.cat(query, (err, data)=> {
+      if (err) {return console.error(err)}
+      console.log("The data is", data)
+      //dispatch goes after here.
+      dispatch(catFromIPFS(data));
+    }
+  )
   }
 }
 
 export function putToIPFS_THUNK(data){
   return (dispatch) => {
+    //Add in the Status calls
+    //Ass in a check for if the node is ready.
     console.log("About to call IPFS WITH THIS data: ", data);
     IPFSNODE.files.add(IPFSNODE.types.Buffer.from(data), (err, files)=> {
       if (err) {return console.error(err)}
       console.log(files[0].hash);
       dispatch(addToIPFS(files[0].hash))
+      window.localStorage.setItem('IPFS_index', files[0].hash )
       console.log("Dispatch to IPFS Sent");
     })
     console.log("Is it async?")

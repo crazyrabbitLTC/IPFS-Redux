@@ -5,10 +5,13 @@ import Eth from 'ethjs';
 import './index.css';
 import App from './App';
 import { store } from './state/store';
-import { updateWeb3Status } from './state/web3/actions';
+import { updateWeb3Status, getUserAccounts_THUNK} from './state/web3/actions';
 import {IPFS_ready} from './state/IPFS/actions';
 import registerServiceWorker from './registerServiceWorker';
+//import OrbitDB from 'orbit-db'
+//import runOrbit from './containers/OrbitDB'
 
+//ipfs
 import IPFSNODE from './ipfs'
 
 ReactDOM.render(
@@ -23,11 +26,20 @@ window.addEventListener('load', () => {
   // could remove and only use lib/web3utils
   const hasWeb3 = typeof window.web3 !== 'undefined';
   const web3 = hasWeb3 ? new Eth(window.web3.currentProvider) : null;
-  IPFSNODE.once('ready', ()=> {
+
+  IPFSNODE.once('ready', async ()=> {
     console.log("IPFS IS READY")
+
     store.dispatch(IPFS_ready(true));
+    //For now we don't need orbit
+    // const database = runOrbit();
+    // console.log("Your database obrit is ", database)
+
   })
+
   store.dispatch(updateWeb3Status(web3));
+  store.dispatch(getUserAccounts_THUNK(web3));
+
 });
 
 
