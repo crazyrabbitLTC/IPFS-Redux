@@ -13,6 +13,7 @@ function mapState(state) {
 function mapDispatch(dispatch) {
   return {
     putToIPFS: (data) => dispatch((putToIPFS_THUNK(data))),
+    getFromIPFS: (data) => dispatch((getFromIPFS_THUNK(data))),
     IPFS_STATUS: {IPFS_reqPending, addToIPFS}
   };
 }
