@@ -29,7 +29,6 @@ class FormIpfs extends React.Component {
 <input type="text" value={this.state.value} onChange={this.handleChange} />
         </label>
         <input type="submit" value="Submit" />
-        <button onClick={()=> {this.props.sendData("TESTING")}}>BUTTON </button>
       </form>
     );
   }

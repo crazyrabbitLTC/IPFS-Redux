@@ -10,9 +10,9 @@ function mapState(state) {
   };
 }
 
-function mapDispatch(/* dispatch */) {
+function mapDispatch(dispatch) {
   return {
-    putToIPFS: putToIPFS_THUNK,
+    putToIPFS: (data) => dispatch((putToIPFS_THUNK(data))),
     IPFS_STATUS: {IPFS_reqPending, addToIPFS}
   };
 }
