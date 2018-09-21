@@ -6,7 +6,8 @@ import IPFS_status from '../components/IPFS_status';
 function mapState(state) {
   //console.log("In the IPFS_STATS", state.IPFS)
   return {
-    IPFS: state.IPFS
+    IPFS: state.IPFS,
+    web3: state.web3.web3,
   };
 }
 

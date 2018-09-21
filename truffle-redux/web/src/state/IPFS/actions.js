@@ -57,6 +57,7 @@ export function putToIPFS_THUNK(data){
       if (err) {return console.error(err)}
       console.log(files[0].hash);
       dispatch(addToIPFS(files[0].hash))
+      window.localStorage.setItem('IPFS_index', files[0].hash )
       console.log("Dispatch to IPFS Sent");
     })
     console.log("Is it async?")
