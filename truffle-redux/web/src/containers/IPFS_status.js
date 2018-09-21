@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { putToIPFS_THUNK, IPFS_reqPending, addToIPFS } from '../state/IPFS/actions'
 
 import IPFS_status from '../components/IPFS_status';
 
@@ -9,8 +10,11 @@ function mapState(state) {
   };
 }
 
-function mapDispatch(/* dispatch */) {
-  return {};
+function mapDispatch(dispatch) {
+  return {
+    putToIPFS: (data) => dispatch((putToIPFS_THUNK(data))),
+    IPFS_STATUS: {IPFS_reqPending, addToIPFS}
+  };
 }
 
 export default connect(mapState, mapDispatch)(IPFS_status);
