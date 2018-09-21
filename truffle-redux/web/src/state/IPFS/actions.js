@@ -1,5 +1,5 @@
 import types from './types';
-import IPFS_NODE from '../../ipfs'
+import IPFSNODE from '../../ipfs'
 
 export function getIPFSStatus(payload){
   return {
@@ -38,19 +38,34 @@ export function IPFS_ready(payload){
 
 export function getFromIPFS_THUNK(query){
   return dispatch => {
-    IPFS_NODE.files.add()
+    IPFSNODE.files.add()
   }
 }
 
+// export function putToIPFS_THUNK(query){
+//   return (dispatch) => {
+//     console.log("About to call IPFS WITH THIS QUERY: ", query);
+//     IPFSNODE.files.add(IPFSNODE.types.Buffer.from(query), (err, files)=> {
+//       if (err) {return console.error(err)}
+//       console.log(files[0].hash);
+//       dispatch(addToIPFS(files[0].hash))
+//       console.log("Dispatch to IPFS Sent");
+//     })
+//   }
+// }
+
 export function putToIPFS_THUNK(query){
-  return dispatch => {
-    IPFS_NODE.files.add(IPFS_NODE.types.Buffer.from(query), (err, files)=> {
+  return (dispatch) => {
+    console.log("About to call IPFS WITH THIS QUERY: ", query);
+
+    IPFSNODE.files.cat('QmPChd2hVbrJ6bfo3WBcTW4iZnpHm8TEzWkLHmLpXhF68A', (err, data) => {
       if (err) return console.error(err)
-      dispatch(addToIPFS(files[0].hash))
+
+      // convert Buffer back to string
+      console.log(data.toString())
     })
   }
 }
-
 export default {
   getIPFSStatus,
   catFromIPFS,
@@ -58,3 +73,13 @@ export default {
   IPFS_reqPending,
   IPFS_ready
 }
+
+
+IPFSNODE.once('ready', () => {
+  IPFSNODE.files.cat('QmPChd2hVbrJ6bfo3WBcTW4iZnpHm8TEzWkLHmLpXhF68A', (err, data) => {
+    if (err) return console.error(err)
+
+    // convert Buffer back to string
+    console.log(data.toString())
+  })
+})
