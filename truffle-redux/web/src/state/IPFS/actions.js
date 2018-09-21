@@ -63,33 +63,3 @@ export function putToIPFS_THUNK(data){
     console.log("Is it async?")
   }
 }
-
-// export function putToIPFS_THUNK(query){
-//   return (dispatch) => {
-//     console.log("About to call IPFS WITH THIS QUERY: ", query);
-
-//     IPFSNODE.files.cat('QmPChd2hVbrJ6bfo3WBcTW4iZnpHm8TEzWkLHmLpXhF68A', (err, data) => {
-//       if (err) return console.error(err)
-
-//       // convert Buffer back to string
-//       console.log(data.toString())
-//     })
-//   }
-// }
-// export default {
-//   getIPFSStatus,
-//   catFromIPFS,
-//   addToIPFS,
-//   IPFS_reqPending,
-//   IPFS_ready
-// }
-
-
-// IPFSNODE.once('ready', () => {
-//   IPFSNODE.files.cat('QmPChd2hVbrJ6bfo3WBcTW4iZnpHm8TEzWkLHmLpXhF68A', (err, data) => {
-//     if (err) return console.error(err)
-
-//     // convert Buffer back to string
-//     console.log(data.toString())
-//   })
-// })
