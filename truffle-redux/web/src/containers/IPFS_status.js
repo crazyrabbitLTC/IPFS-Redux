@@ -8,6 +8,8 @@ function mapState(state) {
   return {
     IPFS: state.IPFS,
     web3: state.web3.web3,
+    user: state.web3.user,
+    userBalance: state.web3.userBalance,
   };
 }
 

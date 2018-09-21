@@ -23,10 +23,10 @@ export function setUserAccounts(accounts){
 
 //This should be in the format of
 //['address', balance]
-export function setUserBalance(accountBalance){
+export function setUserBalance(userBalance){
   return {
     type: types.SET_USER_BALANCE,
-    accountBalance
+    userBalance
   }
 }
 
@@ -65,6 +65,7 @@ export function getAddressBalance_THUNK(web3, address){
     console.log("About to call the get users balance thunk")
     dispatch(setWeb3Fetch(true));
     const balance = await getBalance(web3, address);
+    console.log("The balance of accounts in the thunk ", web3utils.fromWei(balance.toString(10)), 'ether')
     dispatch(setUserBalance(web3utils.fromWei(balance.toString(10)), 'ether'));
     dispatch(setWeb3Fetch(false));
 

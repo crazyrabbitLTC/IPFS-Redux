@@ -19,10 +19,10 @@ export function web3Reducer(state = initialState, action) {
       ...state,
       user: action.accounts
     }
-    case types.SET_ADDRESS_BALANCE:
+    case types.SET_USER_BALANCE:
     return {
       ...state,
-      userBalance: action.accountBalance
+      userBalance: action.userBalance
     }
     case types.SET_WEB3_FETCH:
     return {
