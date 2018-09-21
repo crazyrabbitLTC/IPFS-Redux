@@ -1,4 +1,12 @@
 import IPFS from 'ipfs'
-const IPFSNODE = new IPFS()
+
+//enable pubSub for OrbitDB
+const ipfsOptions = {
+  EXPERIMENTAL: {
+    pubsub: true
+  }
+}
+
+const IPFSNODE = new IPFS(ipfsOptions)
 
 export default IPFSNODE;
