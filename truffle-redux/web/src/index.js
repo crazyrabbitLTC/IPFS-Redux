@@ -9,7 +9,7 @@ import { updateWeb3Status, getUserAccounts_THUNK} from './state/web3/actions';
 import {IPFS_ready} from './state/IPFS/actions';
 import registerServiceWorker from './registerServiceWorker';
 //import OrbitDB from 'orbit-db'
-//import runOrbit from './containers/OrbitDB'
+import runOrbit from './OrbitDB'
 
 //ipfs
 import IPFSNODE from './ipfs'
@@ -22,7 +22,7 @@ ReactDOM.render(
 );
 registerServiceWorker();
 
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
   // could remove and only use lib/web3utils
   const hasWeb3 = typeof window.web3 !== 'undefined';
   const web3 = hasWeb3 ? new Eth(window.web3.currentProvider) : null;
@@ -32,8 +32,8 @@ window.addEventListener('load', () => {
 
     store.dispatch(IPFS_ready(true));
     //For now we don't need orbit
-    // const database = runOrbit();
-    // console.log("Your database obrit is ", database)
+    let database = await runOrbit(IPFSNODE);
+    console.log("Your database obrit is ", database)
 
   })
 

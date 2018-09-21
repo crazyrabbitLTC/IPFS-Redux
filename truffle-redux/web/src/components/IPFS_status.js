@@ -3,36 +3,7 @@ import PropTypes from 'prop-types';
 import FormIpfs from './FormIpfs';
 
 export function Home(props) {
-
-	// let accounts = false;
-
-
-	// function thing() {
-	// 	return new Promise((resolve, reject) => {
-	// 		props.web3.accounts((err, account) => {
-	// 			if (err) {
-	// 				reject(err);
-	// 			}
-	// 			console.log('the account', account);
-	// 			resolve(account);
-	// 		});
-	// 	});
-  // }
-
-  // async function thing2() {
-  //   if(!props.web3){
-  //     return
-  //   }
-  //   return await props.web3.accounts();
-  // }
-
-  // async function getit(){
-  //   accounts = await thing2()
-  //   console.log("This is the accounts", accounts)
-  // }
-
-  // getit();
-  console.log("IPFS STATUS PROPS", props)
+  
 	return (
 
 		<Fragment>
