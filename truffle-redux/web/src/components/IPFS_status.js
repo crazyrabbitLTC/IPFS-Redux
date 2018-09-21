@@ -2,24 +2,10 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import FormIpfs from './FormIpfs';
 
-// import { initialState } from '../state/IPFS/reducers'
-
 export function Home(props) {
-	//console.log('The Web3 availible here is', props.web3);
+
 	let accounts = false;
 
-	// async function getAccounts(props){
-	//   console.log("Get accounts props", props);
-	//   accounts =  await promisify(cb => props.web3.accounts(cb));
-	//   console.log("Indies the accounts", accounts)
-
-	//  }
-
-	// function getAccounts
-
-	//  if(accounts){
-	//   console.log("The accounts are", accounts)
-	// }
 
 	function thing() {
 		return new Promise((resolve, reject) => {
@@ -44,9 +30,7 @@ export function Home(props) {
     accounts = await thing2()
     console.log("This is the accounts", accounts)
   }
-  // if(props.web3){
-  //   console.log('get it back', getit());
-  // }
+
   getit();
 
 	return (
