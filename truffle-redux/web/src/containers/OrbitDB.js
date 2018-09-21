@@ -24,7 +24,9 @@ async function runOrbit(){
 
   // Query
   const result = db.iterator({ limit: -1 }).collect()
-  console.log("THE RESPONSE FROM THE QUERY ON ORBIT", JSON.stringify(result, null, 2))
+  console.log("THE RESPONSE FROM THE QUERY ON ORBIT", JSON.stringify(result.value, null, 2))
+
+  return db
 }
 
 export default runOrbit;

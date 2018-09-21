@@ -30,8 +30,8 @@ window.addEventListener('load', () => {
     console.log("IPFS IS READY")
 
     store.dispatch(IPFS_ready(true));
-    runOrbit();
-
+    const database = runOrbit();
+    console.log("Your database obrit is ", database)
 
   })
   store.dispatch(updateWeb3Status(web3));
