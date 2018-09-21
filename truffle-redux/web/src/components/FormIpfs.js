@@ -23,7 +23,7 @@ class FormIpfs extends React.Component {
 	}
 
 	render() {
-		console.log('The form props ', this.props.sendData);
+		// console.log('The form props ', this.props.sendData);
 		return (
 			<form onSubmit={this.handleSubmit}>
 				<label>

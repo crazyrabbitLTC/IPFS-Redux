@@ -16,12 +16,11 @@ async function runOrbit(IPFSNODE){
   })
 
   // Add an entry
-  const hash = await db.add('world')
-  console.log("THE HASH ENTERED INTO ORBIT", hash)
+  // const hash = await db.add('world')
 
   // Query
-  const result = db.iterator({ limit: -1 }).collect()
-  console.log("THE RESPONSE FROM THE QUERY ON ORBIT", JSON.stringify(result.value, null, 2))
+  // const result = db.iterator({ limit: -1 }).collect()
+  // console.log("THE RESPONSE FROM THE QUERY ON ORBIT", JSON.stringify(result.value, null, 2))
 
   return db
 }
