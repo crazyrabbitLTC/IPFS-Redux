@@ -1,9 +1,6 @@
 import OrbitDB from 'orbit-db'
-import IPFSNODE from '../ipfs'
 
-
-
-async function runOrbit(){
+async function runOrbit(IPFSNODE){
 
   console.log("IPFS is READY in ORBIT DB MODULE")
 
