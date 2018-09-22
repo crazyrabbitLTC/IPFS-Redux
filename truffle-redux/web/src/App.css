@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .App-logo {
@@ -26,3 +28,24 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.Account-Bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin: 15px;
+}
+
+.Account-Bar-Text {
+  color: grey
+}
+
+.Account-Bar-Eth-Address{
+  color: rgb(123, 184, 123);
+}
+
+.Eth {
+  flex: 1
+}
+
+

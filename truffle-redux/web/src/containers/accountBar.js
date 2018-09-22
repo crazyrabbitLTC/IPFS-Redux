@@ -8,6 +8,7 @@ function mapState(state) {
     web3: state.web3.web3,
     user: state.web3.user,
     userBalance: state.web3.userBalance,
+    loading: state.web3.isFetching,
   };
 }
 
