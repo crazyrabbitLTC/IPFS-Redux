@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import Home from '../components/Home';
+import Login from '../components/Login';
 
 function mapState(state) {
   //console.log("LOG FROM HOME CONTAINER", state.web3.web3)
@@ -9,8 +9,7 @@ function mapState(state) {
     user: state.web3.user,
     userBalance: state.web3.userBalance,
     loading: state.web3.isFetching,
-		IPFS: state.IPFS,
-		ALLSTATE: state
+    IPFS: state.IPFS
   };
 }
 
@@ -18,4 +17,4 @@ function mapDispatch(/* dispatch */) {
   return {};
 }
 
-export default connect(mapState, mapDispatch)(Home);
+export default connect(mapState, mapDispatch)(Login);
