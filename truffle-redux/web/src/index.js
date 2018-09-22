@@ -14,7 +14,7 @@ import runOrbit from './OrbitDB';
 import OppStoreJson from './contracts/OppStore.json';
 import IPFSNODE from './ipfs'
 
-console.log("The OPP: ", OppStoreJson.abi)
+const deployedContractAddress = "0x345ca3e014aaf5dca488057592ee47305d9b3e10";
 
 ReactDOM.render(
   <Provider store={store}>
@@ -30,7 +30,7 @@ window.addEventListener('load', async () => {
   const web3 = hasWeb3 ? new Eth(window.web3.currentProvider) : null;
 
   const oppStoreContract = web3.contract(OppStoreJson.abi)
-  const oppStore = oppStoreContract.at('0x4e72770760c011647d4873f60a3cf6cdea896cd8');
+  const oppStore = oppStoreContract.at(deployedContractAddress);
 
   web3.oppStore = oppStore;
   console.log("oppStore: ", oppStore);
