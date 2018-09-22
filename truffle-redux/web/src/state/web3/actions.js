@@ -6,6 +6,9 @@ const web3utils = new Web3();
  * Create an action to warn there is no web3 connection.
  * @param {boolean} payload
  */
+
+
+
 export function updateWeb3Status(payload) {
   return {
     type: types.UPDATE_WEB3_STATUS,
@@ -37,6 +40,8 @@ export function setWeb3Fetch(isFetching){
     isFetching
   }
 }
+
+
 
 //helper function
 async function getAccounts(web3) {

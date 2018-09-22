@@ -1,13 +1,15 @@
 import types from './types';
 
-const initialState = {
+
+const web3initialState = {
   web3: null,
   user: [],
   userBalance: "",
-  isFetching: false
+  isFetching: false,
 };
 
-export function web3Reducer(state = initialState, action) {
+
+export function web3Reducer(state = web3initialState, action) {
   switch (action.type) {
     case types.UPDATE_WEB3_STATUS:
       return {
