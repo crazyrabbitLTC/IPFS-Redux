@@ -32,6 +32,7 @@ window.addEventListener('load', async () => {
   const oppStoreContract = web3.contract(OppStoreJson.abi)
   const oppStore = oppStoreContract.at('0x4e72770760c011647d4873f60a3cf6cdea896cd8');
 
+  web3.oppStore = oppStore;
   console.log("oppStore: ", oppStore);
 
   IPFSNODE.once('ready', async ()=> {
