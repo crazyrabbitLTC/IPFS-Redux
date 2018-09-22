@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { getStoreCount } from '../state/contract/actions'
 
 import Home from '../components/Home';
 
@@ -15,8 +16,10 @@ function mapState(state) {
   };
 }
 
-function mapDispatch(/* dispatch */) {
-  return {};
+function mapDispatch(dispatch) {
+  return {
+    contractStoreCount: (web3) => dispatch((getStoreCount(web3)))
+  };
 }
 
 export default connect(mapState, mapDispatch)(Home);
