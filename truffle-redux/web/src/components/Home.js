@@ -4,13 +4,16 @@ import PropTypes from 'prop-types';
 import Block from './Block';
 import Content from './Content';
 import AccountBar from './accountBar';
+import Login from './Login';
 
 export function Home(props) {
   return (
     <Fragment>
       <Block {...props} />
       <AccountBar {...props}/>
+      <Login {...props} />
       <Content {...props} />
+
     </Fragment>
   );
 }
