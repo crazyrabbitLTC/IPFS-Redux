@@ -10,7 +10,8 @@ function mapState(state) {
     userBalance: state.web3.userBalance,
     loading: state.web3.isFetching,
 		IPFS: state.IPFS,
-		ALLSTATE: state
+    ALLSTATE: state,
+    contract: state.contract
   };
 }
 
