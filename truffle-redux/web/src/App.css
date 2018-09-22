@@ -1,51 +1,201 @@
 .App {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	background-color: #faecec;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+	animation: App-logo-spin infinite 20s linear;
+	height: 80px;
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+	background-color: #222;
+	height: 30px;
+	color: white;
+}
+
+.App-connected {
+	background-color: rgb(1, 36, 1);
 }
 
 .App-title {
-  font-size: 1.5em;
+	font-size: .8em;
 }
 
 .App-intro {
-  font-size: large;
+	font-size: large;
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 .Account-Bar {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  margin: 15px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
 }
 
 .Account-Bar-Text {
-  color: grey
+	color: grey;
 }
 
-.Account-Bar-Eth-Address{
-  color: rgb(123, 184, 123);
+.Account-Bar-Eth-Address {
+	color: rgb(123, 184, 123);
+}
+
+.AddressBar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
 .Eth {
-  flex: 1
+	flex: 1;
 }
 
+.Main-Container {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start; /* align items in Main Axis */
+	align-items: stretch; /* align items in Cross Axis */
+	align-content: stretch; /* Extra space in Cross Axis */
+}
 
+.Inner-Container-Top {
+	flex: 1;
+}
+
+.Inner-Container-Middle {
+	flex: 10;
+}
+
+.Inner-Container-Bottom {
+	flex: 1;
+}
+
+*,
+*:before,
+*:after {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: #fafafa;
+
+	color: #161616;
+	font-size: 14px;
+	/* Helvetica/Arial-based sans serif stack */
+	font-family: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad,
+		"DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial,
+		sans-serif;
+}
+
+.flexbox-parent {
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	flex-direction: column;
+
+	justify-content: flex-start; /* align items in Main Axis */
+	align-items: stretch; /* align items in Cross Axis */
+	align-content: stretch; /* Extra space in Cross Axis */
+}
+
+.flexbox-item {
+	padding: 8px;
+}
+.flexbox-item-grow {
+	flex: 1; /* same as flex: 1 1 auto; */
+}
+
+.flexbox-item.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+}
+.flexbox-item.footer {
+}
+.flexbox-item.content {
+}
+
+.fill-area {
+	display: flex;
+	flex-direction: row;
+
+	justify-content: flex-start; /* align items in Main Axis */
+	align-items: stretch; /* align items in Cross Axis */
+	align-content: stretch; /* Extra space in Cross Axis */
+}
+.fill-area-content {
+	border: 1px solid #000000;
+
+	/* Needed for when the area gets squished too far and there is content that can't be displayed */
+	overflow: auto;
+}
+
+.title-bar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-end;
+	margin-top: 20px;
+	flex-grow: 1;
+	align-items: baseline;
+}
+
+.oppTitle {
+	font-family: 'Noto Serif', serif;
+
+	margin-bottom: 3px;
+	/* justify-self: flex-start; */
+	border-left: 6px solid red;
+	padding-left: 8px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.big-font {
+	font-size: 3em;
+}
+.oppContractAddress {
+	justify-self: flex-end;
+	align-self: center;
+}
+
+.store-address {
+	justify-self: flex-end;
+	font-size: .3em;
+	color: rgb(145, 145, 145);
+	align-self: flex-end;
+}
+
+.menu-bar {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	margin-left: 8px;
+}
+.nav-button {
+	border-bottom: 1px dotted;
+}

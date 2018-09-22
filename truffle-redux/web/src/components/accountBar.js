@@ -1,23 +1,28 @@
 import React, { Fragment } from 'react';
-import Loader from 'react-loader-spinner'
+import Loader from 'react-loader-spinner';
 import PropTypes from 'prop-types';
 
 export function AccountBar(props) {
-  console.log('Account Bar Props: ', props);
 
-  let stores = 0;
-  stores = props.contractStoreCount(props.web3);
+  let balance = parseFloat(props.userBalance).toFixed(2);
+  console.log(typeof balance);
 	return (
 		<Fragment>
 			<div className="Account-Bar">
-      <div className="ContractStoreCount">Number of Stores: {stores}</div>
 				<div className="Account-Bar Eth">
-        <span>IPFS {props.IPFS.IPFS_REQ_READY ? "Ready" : <Loader type="ThreeDots" color="green" height={40} width={80} />}</span>
-					<span className="Account-Bar-Text">AccountBar</span>
-					<span className="Account-Bar-Eth-Address">{props.user}</span>
+					<div className="AddressBar">
+						<div className="Account-Bar-Balance">{balance} ETH</div>
+						<span className="Account-Bar-Eth-Address">Address: {props.user}</span>
+						<span>
+							IPFS{' '}
+							{props.IPFS.IPFS_REQ_READY ? (
+								'Ready'
+							) : (
+								<Loader type="ThreeDots" color="green" height={10} width={30} />
+							)}
+						</span>
+					</div>
 				</div>
-
-        <div className="Account-Bar-Balance">{props.userBalance} ETH</div>
 			</div>
 		</Fragment>
 	);

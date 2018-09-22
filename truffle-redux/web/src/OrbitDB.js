@@ -1,28 +1,25 @@
-import OrbitDB from 'orbit-db'
+import OrbitDB from 'orbit-db';
 
-async function runOrbit(IPFSNODE){
+async function runOrbit(IPFSNODE) {
+	const orbitdb = new OrbitDB(IPFSNODE);
 
-  console.log("IPFS is READY in ORBIT DB MODULE")
+	// // Create / Open a database
+	const db = await orbitdb.log('hello');
+	await db.load();
 
-  const orbitdb = new OrbitDB(IPFSNODE)
+	// // Listen for updates from peers
+	db.events.on('replicated', (address) => {
+		console.log(db.iterator({ limit: -1 }).collect());
+	});
 
-  // Create / Open a database
-  const db = await orbitdb.log('hello')
-  await db.load()
+	// Add an entry
+	// const hash = await db.add('world')
 
-  // Listen for updates from peers
-  db.events.on('replicated', (address) => {
-    console.log(db.iterator({ limit: -1 }).collect())
-  })
+	// Query
+	// const result = db.iterator({ limit: -1 }).collect()
+	// console.log("THE RESPONSE FROM THE QUERY ON ORBIT", JSON.stringify(result.value, null, 2))
 
-  // Add an entry
-  // const hash = await db.add('world')
-
-  // Query
-  // const result = db.iterator({ limit: -1 }).collect()
-  // console.log("THE RESPONSE FROM THE QUERY ON ORBIT", JSON.stringify(result.value, null, 2))
-
-  return db
+	return db;
 }
 
 export default runOrbit;
