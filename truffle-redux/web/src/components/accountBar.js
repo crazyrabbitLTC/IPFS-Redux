@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 export function AccountBar(props) {
 	let balance = parseFloat(props.userBalance).toFixed(2);
-	console.log(typeof balance);
 	return (
 		<Fragment>
 			<div className="Account-Bar">

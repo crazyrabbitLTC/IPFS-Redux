@@ -1,4 +1,5 @@
 import React from 'react';
+import {ButtonToolBar, Button} from 'react-bootstrap'
 
 class CreateStore extends React.Component {
   constructor(props) {
@@ -39,7 +40,9 @@ class CreateStore extends React.Component {
             value={this.state.storeName}
             onChange={this.handleInputChange} />
         </label>
-        <button 
+        <ButtonToolbar>
+        <Button bsStyle="info" >Info</Button>
+        </ButtonToolbar>
       </form>
 
     );

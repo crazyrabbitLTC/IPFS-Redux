@@ -14,6 +14,13 @@ export function updateWeb3Status(payload) {
 	};
 }
 
+export function web3Ready(bool){
+  return {
+    type:types.WEB3_READY,
+    bool
+  }
+}
+
 //This should be int the format of an array
 export function setUserAccounts(accounts) {
 	return {
@@ -39,25 +46,25 @@ export function setWeb3Fetch(isFetching) {
 	};
 }
 
-export function putOrbitOnState(orbitInstance){
-  return {
-    type: types.PUT_ORBIT_ON_STATE,
-    orbitInstance
-  }
+export function putOrbitOnState(orbitInstance) {
+	return {
+		type: types.PUT_ORBIT_ON_STATE,
+		orbitInstance
+	};
 }
 
-export function databaseReady(bool){
-  return {
-    type: types.ORBIT_DB_READY,
-    bool
-  }
+export function databaseReady(bool) {
+	return {
+		type: types.ORBIT_DB_READY,
+		bool
+	};
 }
 
-export function loadDatabase(payload){
-  return {
-    type: types.ORBIT_DB_LOADED,
-    payload
-  }
+export function loadDatabase(payload) {
+	return {
+		type: types.ORBIT_DB_LOADED,
+		payload
+	};
 }
 //helper function
 async function getAccounts(web3) {
@@ -88,14 +95,21 @@ export function getAddressBalance_THUNK(web3, address) {
 	};
 }
 
-export function getOrbit(orbitInstance){
-  return async (dispatch) => {
-    dispatch(databaseReady(false))
-    dispatch(putOrbitOnState(orbitInstance))
-  }
+export function getOrbit(orbitInstance) {
+	return async (dispatch) => {
+		dispatch(databaseReady(false));
+		dispatch(putOrbitOnState(orbitInstance));
+	};
 }
 
-
+export function checkContractWorks(web3) {
+	return async (dispatch) => {
+		console.log('Web3 in dispatch', web3.oppStore.storeCount());
+		const contract = web3.oppStore;
+		const working = await contract.storeCount();
+		console.log('What is contract? ', typeof working);
+	};
+}
 
 export default {
 	updateWeb3Status
