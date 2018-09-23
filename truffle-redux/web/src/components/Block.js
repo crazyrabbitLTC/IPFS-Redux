@@ -12,10 +12,10 @@ export function Block(props) {
 	);
 }
 
-Block.propTypes = {
-	web3: PropTypes.object,
-	intl: PropTypes.object.isRequired
-};
+// Block.propTypes = {
+// 	web3: PropTypes.object,
+// 	intl: PropTypes.object.isRequired
+// };
 
 Block.defaultProps = {
 	web3: null

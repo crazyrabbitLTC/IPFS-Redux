@@ -7400,8 +7400,14 @@
       "links": {},
       "address": "0x9fd9828a17ef3402540e9d53e25b7e785021dc6e",
       "transactionHash": "0x8f451ff7da760fdaa03747e90ade64379fa4ef5d06c62d1fb66a917fec86b936"
+    },
+    "5777": {
+      "events": {},
+      "links": {},
+      "address": "0x345ca3e014aaf5dca488057592ee47305d9b3e10",
+      "transactionHash": "0x08b78a445c33db84217e44113c31fd0f455f8d676a99773f75e373a519baf0d9"
     }
   },
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-09-22T18:45:47.838Z"
+  "updatedAt": "2018-09-23T17:07:02.733Z"
 }
