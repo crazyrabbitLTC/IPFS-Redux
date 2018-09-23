@@ -47,13 +47,6 @@ window.addEventListener('load', async () => {
     store.dispatch(databaseReady(false));
     const orbitInstance = await runOrbit(IPFSNODE, web3account);
 
-    // orbitInstance.events.on('ready', () => {
-    //   store.dispatch(databaseReady(true))
-    //   const data = orbitInstance.iterator().collect();
-    //   store.dispatch(loadDatabase(data))
-
-    //   //Here is where we will add data onto state
-    // })
     await orbitInstance.load();
     const hash = await orbitInstance.add({title: 'Hello', content: 'World'});
 
