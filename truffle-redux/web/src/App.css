@@ -219,6 +219,19 @@ body {
 
 }
 
+.create-product {
+  display: flex;
+  flex-direction: row;
+  
+}
+
+.create-product-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px;
+}
+
 #80width {
   width: 80%;
 }

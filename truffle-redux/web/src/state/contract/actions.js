@@ -48,7 +48,7 @@ export function getStoreCount(web3){
 
 export function createStore_THUNK(marketHash) {
   return async (dispatch) => {
-    console.log("About to create a store")
+    console.log("About to create a store Thunk")
     dispatch(contractLoading(true));
     try {
       const newStore = await oppMarket.openStore(marketHash, { gas: 300000 });
@@ -61,4 +61,20 @@ export function createStore_THUNK(marketHash) {
     dispatch(contractLoading(false));
 
   }
+}
+
+export function createProduct_THUNK(price, productID, hash) {
+  return async (dispatch) => {
+    console.log("About to Create a Product Thunk")
+    dispatch(contractLoading(true))
+    try {
+      const newProduct = await oppMarket.createProduct(price, productID, hash, {gas: 300000});
+      console.log("The Create product Thunk returns this from the new product: ", newProduct)
+    } catch (error) {
+      console.error(error)
+    }
+    dispatch(contractLoading(false))
+  }
+
+
 }

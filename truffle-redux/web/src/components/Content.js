@@ -2,7 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import { injectIntl } from 'react-intl';
-import CreateProduct from './CreateProduct';
+import CreateProduct from '../containers/createProduct';
 import Purchases from './Purchases';
 import SingleProduct from './SingleProduct';
 import queryString from 'query-string';

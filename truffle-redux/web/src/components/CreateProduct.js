@@ -1,4 +1,5 @@
 import React from 'react';
+import {Button} from 'react-bootstrap';
 
 class CreateProduct extends React.Component {
 	constructor(props) {
@@ -8,7 +9,7 @@ class CreateProduct extends React.Component {
 			productDescription: '',
 			productName: '',
 			quantity: 0,
-			price: 0
+      price: 0
 		};
 
 		this.handleInputChange = this.handleInputChange.bind(this);
@@ -22,11 +23,28 @@ class CreateProduct extends React.Component {
 		this.setState({
 			[name]: value
 		});
-	}
+  }
+
+  createProduct(){
+    let hash = this.createInIPFS();
+    let price = this.state.price;
+    //mocking productID, really this should come from the contract in advance
+    let productID = 1;
+    this.props.createProduct(price, productID, hash);
+
+  }
+
+  createInIPFS(){
+    //right now we mockIPFS
+    return "DEMO HASH!"
+  }
+
 
 	render() {
 		return (
-			<form>
+      <div className="create-product">
+			<form className="create-product-form">
+
 				<span>Create Product:</span>
 
 				<label>
@@ -62,7 +80,9 @@ class CreateProduct extends React.Component {
 					Price:
 					<input name="price" type="number" value={this.state.price} onChange={this.handleInputChange} />
 				</label>
-			</form>
+        <Button bsStyle="info" onClick={() => {this.createProduct()}}>Create</Button>
+			</form></div>
+
 		);
 	}
 }
