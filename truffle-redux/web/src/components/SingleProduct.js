@@ -1,24 +1,29 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string'
-
+import queryString from 'query-string';
 
 class SingleProduct extends React.Component {
-  constructor(props){
-    super(props)
+	constructor(props) {
+		super(props);
+		this.state = {
+			productHash: ''
+		};
+	}
+	componentDidMount() {
+		console.log(this.props.location.search);
+		this.setState(() => ({ productHash: this.props.location.search }));
+	}
 
-  }
-  componentDidMount() {
-    console.log(this.props.location.search) 
-  }
-
-  render(){
-    return (
-      <Fragment>
-
-      </Fragment>
-    );
-  }
+	render() {
+		return (
+			<Fragment>
+				<div className="Single-Product-Description">
+					<div className="Single-Product-Title">Product Name</div>
+					<div>{this.state.productHash}</div>
+				</div>
+			</Fragment>
+		);
+	}
 }
 
 SingleProduct.propTypes = {

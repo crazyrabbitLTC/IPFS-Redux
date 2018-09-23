@@ -206,3 +206,13 @@ body {
 .nav-button {
 	border-bottom: 1px dotted;
 }
+
+.Single-Product-Description {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.Single-Product-Title {
+  background-color: #222
+}

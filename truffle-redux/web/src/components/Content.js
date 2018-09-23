@@ -62,7 +62,7 @@ export function Content(props) {
 						<Switch>
 							<Route exact path="/createProduct" component={CreateProduct} />
 							<Route exact path="/purchases" component={Purchases} />
-              <Route path={`match.path/products`} component={SingleProduct}/>
+              <Route path={`/products`} component={SingleProduct}/>
 							{/* <Route path="/about" component={About} /> */}
 
 							{/* <Route exact path="/demo" component={IPFS_status} />
