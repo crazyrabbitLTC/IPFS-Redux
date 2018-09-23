@@ -49,6 +49,8 @@ window.addEventListener('load', async () => {
 
     orbitInstance.events.on('ready', () => {
       store.dispatch(databaseReady(true))
+
+      //Here is where we will add data onto state
     })
 
     store.dispatch(getOrbit(orbitInstance));
