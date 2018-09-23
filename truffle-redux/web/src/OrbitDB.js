@@ -6,11 +6,18 @@ async function runOrbit(IPFSNODE, account) {
 
   console.log("OrbitDB Account", account);
   // // Create / Open a database
-  //Obviously in the future the database should be linked to the user themselves, not one giant general database as we need to duplicate for everyone. 
-	const db = await orbitdb.feed("stackathon");
-  await db.load();
+  //Obviously in the future the database should be linked to the user themselves, not one giant general database as we need to duplicate for everyone.
+  const db = await orbitdb.feed("stackathon");
+  // await db.load();
+  // const hash = await db.add({title: 'Hello', content: 'World'});
 
-  console.log("OrbitDB loaded", db);
+  // db.events.on('replicated', (address) => {
+  //   console.log(db.iterator({ limit: -1 }).collect())
+  // })
+
+
+  // console.log("OrbitDB loaded", db);
+  // console.log("Orbitdb hash", hash)
 
 	// // // Listen for updates from peers
 	// db.events.on('replicated', (address) => {

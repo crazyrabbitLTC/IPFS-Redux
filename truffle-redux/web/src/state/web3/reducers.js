@@ -5,7 +5,7 @@ const web3initialState = {
   web3: null,
   orbitdb: null,
   databaseReady: false,
-  data: [],
+  orbitData: [],
   user: [],
   userBalance: "",
   isFetching: false,
@@ -44,7 +44,7 @@ export function web3Reducer(state = web3initialState, action) {
     }
     case types.ORBIT_DB_LOADED:
     return {
-      ...state, data: action.payload
+      ...state, orbitData: action.payload
     }
     default:
       return state;

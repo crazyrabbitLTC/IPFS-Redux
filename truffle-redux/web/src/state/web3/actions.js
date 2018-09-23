@@ -91,7 +91,6 @@ export function getAddressBalance_THUNK(web3, address) {
 
 export function getOrbit(orbitInstance){
   return async (dispatch) => {
-    console.log("INSIDE ORBIT DB THUNK!!!!!");
     dispatch(databaseReady(false))
     dispatch(putOrbitOnState(orbitInstance))
   }
