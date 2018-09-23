@@ -52,6 +52,13 @@ export function databaseReady(bool){
     bool
   }
 }
+
+export function loadDatabase(payload){
+  return {
+    type: types.ORBIT_DB_LOADED,
+    payload
+  }
+}
 //helper function
 async function getAccounts(web3) {
 	return await web3.accounts();

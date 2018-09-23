@@ -5,7 +5,7 @@ import Eth from 'ethjs';
 import './index.css';
 import App from './App';
 import { store } from './state/store';
-import { updateWeb3Status, getUserAccounts_THUNK, getOrbit, databaseReady } from './state/web3/actions';
+import { updateWeb3Status, getUserAccounts_THUNK, getOrbit, databaseReady, loadDatabase } from './state/web3/actions';
 import { IPFS_ready } from './state/IPFS/actions';
 import registerServiceWorker from './registerServiceWorker';
 //import OrbitDB from 'orbit-db'
@@ -49,6 +49,8 @@ window.addEventListener('load', async () => {
 
     orbitInstance.events.on('ready', () => {
       store.dispatch(databaseReady(true))
+      const data = orbitInstance.iterator().collect();
+      store.dispatch(loadDatabase(data))
 
       //Here is where we will add data onto state
     })
