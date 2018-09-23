@@ -1,11 +1,10 @@
-import React, { Fragment } from '../../../../../../Library/Caches/typescript/2.9/node_modules/@types/react';
+import React, { Fragment } from 'react';
 import Loader from 'react-loader-spinner';
-import PropTypes from '../../../../../../Library/Caches/typescript/2.9/node_modules/@types/prop-types';
+import PropTypes from 'prop-types';
 
 export function AccountBar(props) {
-
-  let balance = parseFloat(props.userBalance).toFixed(2);
-  console.log(typeof balance);
+	let balance = parseFloat(props.userBalance).toFixed(2);
+	console.log(typeof balance);
 	return (
 		<Fragment>
 			<div className="Account-Bar">

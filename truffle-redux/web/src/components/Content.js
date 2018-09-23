@@ -2,8 +2,8 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import { injectIntl } from 'react-intl';
-import CreateProduct from './CreateProduct'
-import Purchases from './Purchases'
+import CreateProduct from './CreateProduct';
+import Purchases from './Purchases';
 
 export function Content(props) {
 	//if I have a store contract it should show store options
@@ -28,7 +28,12 @@ export function Content(props) {
 		return (
 			<div>
 				{' '}
-				<span className="nav-button"><Link to="/createProduct">Create Product</Link></span> <span className="nav-button"><Link to="/purchases">Check Purchases</Link></span>
+				<span className="nav-button">
+					<Link to="/createProduct">Create Product</Link>
+				</span>{' '}
+				<span className="nav-button">
+					<Link to="/purchases">Check Purchases</Link>
+				</span>
 			</div>
 		);
 	}
@@ -55,16 +60,14 @@ export function Content(props) {
 						</div>
 						<br />
 						<br />
+						<Switch>
+							<Route exact path="/createProduct" component={CreateProduct} />
+							<Route exact path="/purchases" component={Purchases} />
+							{/* <Route path="/about" component={About} /> */}
 
-            <Switch>
-            <Route exact path="/createProduct" component={CreateProduct} />
-            <Route exact path="/purchases" component={Purchases} />
-            {/* <Route path="/about" component={About} /> */}
-
-            {/* <Route exact path="/demo" component={IPFS_status} />
+							{/* <Route exact path="/demo" component={IPFS_status} />
             <Route component={NoMatch} /> */}
-          </Switch>
-
+						</Switch>
 						<br />
 						<br />
 						This box with a border should fill the blue area except for the padding (just to show the middle
