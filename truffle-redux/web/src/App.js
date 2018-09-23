@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React from '../../../../../Library/Caches/typescript/2.9/node_modules/@types/react';
+import { BrowserRouter as Router, Route, Switch } from '../../../../../Library/Caches/typescript/2.9/node_modules/@types/react-router-dom';
 import { IntlProvider } from 'react-intl';
 
 import './App.css';
@@ -17,8 +17,9 @@ function App() {
       <Router basename="/">
         <div className="App">
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route  path="/" component={Home} />
             {/* <Route path="/about" component={About} /> */}
+
             <Route exact path="/demo" component={IPFS_status} />
             <Route component={NoMatch} />
           </Switch>

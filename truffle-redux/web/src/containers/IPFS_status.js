@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { connect } from '../../../../../../Library/Caches/typescript/2.9/node_modules/@types/react-redux';
 import { putToIPFS_THUNK, IPFS_reqPending, addToIPFS, getFromIPFS_THUNK } from '../state/IPFS/actions'
 
 import IPFS_status from '../components/IPFS_status';

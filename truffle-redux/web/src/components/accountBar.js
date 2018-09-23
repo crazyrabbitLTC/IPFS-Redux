@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from '../../../../../../Library/Caches/typescript/2.9/node_modules/@types/react';
 import Loader from 'react-loader-spinner';
-import PropTypes from 'prop-types';
+import PropTypes from '../../../../../../Library/Caches/typescript/2.9/node_modules/@types/prop-types';
 
 export function AccountBar(props) {
 

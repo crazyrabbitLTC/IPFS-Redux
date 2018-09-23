@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { connect } from '../../../../../../Library/Caches/typescript/2.9/node_modules/@types/react-redux';
 import { getStoreCount } from '../state/contract/actions'
 
 import Home from '../components/Home';

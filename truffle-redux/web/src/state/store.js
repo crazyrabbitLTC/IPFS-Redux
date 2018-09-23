@@ -2,10 +2,10 @@ import {
   createStore,
   applyMiddleware,
   compose,
-} from 'redux';
+} from '../../../../../../Library/Caches/typescript/2.9/node_modules/redux';
 import reducer from './reducers';
 import thunkMiddleware from 'redux-thunk';
-import logger from 'redux-logger'
+import logger from '../../../../../../Library/Caches/typescript/2.9/node_modules/@types/redux-logger'
 
 function configureStore(/* deps = {} */) {
   /* eslint-disable-next-line no-underscore-dangle */

@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment } from '../../../../../../Library/Caches/typescript/2.9/node_modules/@types/react';
+import PropTypes from '../../../../../../Library/Caches/typescript/2.9/node_modules/@types/prop-types';
 import FormIpfs from './FormIpfs';
 
 export function Home(props) {
-  
+
 	return (
 
 		<Fragment>

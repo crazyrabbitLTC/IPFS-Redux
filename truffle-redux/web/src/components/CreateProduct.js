@@ -1,4 +1,4 @@
-import React from 'react';
+import React from '../../../../../../Library/Caches/typescript/2.9/node_modules/@types/react';
 
 class CreateProduct extends React.Component {
   constructor(props) {

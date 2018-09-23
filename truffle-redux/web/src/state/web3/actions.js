@@ -1,5 +1,5 @@
 import types from './types';
-import Web3 from 'web3';
+import Web3 from '../../../../../../../Library/Caches/typescript/2.9/node_modules/@types/web3';
 const web3utils = new Web3();
 
 /**
