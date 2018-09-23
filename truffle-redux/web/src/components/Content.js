@@ -60,7 +60,9 @@ export function Content(props) {
 					</div>
 				</div>
 
-				<div className="flexbox-item footer">Footer</div>
+				<div className="flexbox-item footer">
+					Open Pay - <a href="www.dennisonbertram.com">Dennison Bertram</a>
+				</div>
 			</div>
 		</div>
 	);

@@ -5,7 +5,10 @@ class CreateProduct extends React.Component {
     super(props);
     this.state = {
       isGoing: true,
-      numberOfGuests: 2
+      productDescription: "",
+      productName: "",
+      quantity: 0,
+      price: 0
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -24,21 +27,38 @@ class CreateProduct extends React.Component {
   render() {
     return (
       <form>
+        <span>Create Product:</span>
+
         <label>
-          Is going:
+          Product Name:
           <input
-            name="isGoing"
-            type="checkbox"
-            checked={this.state.isGoing}
+            name="productName"
+            type="text"
+            value={this.state.productName}
+            onChange={this.handleInputChange} />
+        </label><br />
+        <label>
+          Product Description:
+          <input
+            name="productDescription"
+            type="text"
+            value={this.state.productDescription}
+            onChange={this.handleInputChange} />
+        </label><br />
+        <label>
+          Quantity:
+          <input
+            name="quantity"
+            type="number"
+            value={this.state.quantity}
             onChange={this.handleInputChange} />
         </label>
-        <br />
         <label>
-          Number of guests:
+          Price:
           <input
-            name="numberOfGuests"
+            name="price"
             type="number"
-            value={this.state.numberOfGuests}
+            value={this.state.price}
             onChange={this.handleInputChange} />
         </label>
       </form>
