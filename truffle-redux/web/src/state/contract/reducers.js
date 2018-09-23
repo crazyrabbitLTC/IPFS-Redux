@@ -2,15 +2,17 @@ import types from './types';
 
 export const initialState = {
   contractLoading: false,
-  totalStores: 0
+  contractStoreCount: 0,
+  storeExists: 0,
+
 };
 
 export function contractReducer(state = initialState, action) {
 	switch (action.type) {
-    case types.SET_STORE:
+    case types.SET_ALL_STORES:
       return {
         ...state,
-        totalStores: action.storeCount
+        contractStoreCount: action.storeCount
       }
 		case types.CONTRACT_LOADING:
 			return {

@@ -7,9 +7,16 @@ export function contractLoading(bool){
   }
 }
 
+export function userStoreExists(bool){
+  return {
+    type: types.USER_STORE_EXISTS,
+    bool
+  }
+}
+
 export function setTotalStores(storeCount){
   return {
-    type: types.SET_STORE,
+    type: types.SET_ALL_STORES,
     storeCount
   }
 }
