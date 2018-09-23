@@ -39,7 +39,7 @@ export function getStoreCount(web3){
   }
 }
 
-export function createMarket(marketHash) {
+export function createStore_THUNK(marketHash) {
   return async (dispatch) => {
     console.log("About to create a store")
     dispatch(contractLoading(true));

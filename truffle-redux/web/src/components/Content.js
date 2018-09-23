@@ -5,13 +5,12 @@ import { injectIntl } from 'react-intl';
 import CreateProduct from './CreateProduct';
 import Purchases from './Purchases';
 import SingleProduct from './SingleProduct';
-import queryString from 'query-string'
+import queryString from 'query-string';
+import CreateStore from '../containers/createStore';
 
 export function Content(props) {
-
 	//console.log('Content Props: ', props);
 	let storeExists = false;
-
 
 	function getContractAddress(props) {
 		if (props.web3 && props.web3.oppStore && props.web3.oppStore.address) {
@@ -38,7 +37,11 @@ export function Content(props) {
 	}
 
 	function createStore() {
-		return <div className="nav-button">Create Store</div>;
+		return (
+			<div className="nav-button">
+				<Link to="/createStore">Create Store</Link>
+			</div>
+		);
 	}
 	return (
 		<div className="App-intro">
@@ -62,13 +65,13 @@ export function Content(props) {
 						<Switch>
 							<Route exact path="/createProduct" component={CreateProduct} />
 							<Route exact path="/purchases" component={Purchases} />
-              <Route path={`/products`} component={SingleProduct}/>
+							<Route path={`/products`} component={SingleProduct} />
+							<Route exact path="/createStore" component={CreateStore} />
 							{/* <Route path="/about" component={About} /> */}
 
 							{/* <Route exact path="/demo" component={IPFS_status} />
             <Route component={NoMatch} /> */}
 						</Switch>
-
 					</div>
 				</div>
 

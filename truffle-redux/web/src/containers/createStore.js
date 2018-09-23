@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 // import { getStoreCount } from '../state/contract/actions';
-
+import { createStore_THUNK } from '../../src/state/contract/actions'
 import CreateStore from '../components/CreateStore';
 
 function mapState(state) {
@@ -14,8 +14,9 @@ function mapState(state) {
 
 function mapDispatch(dispatch) {
 	return {
-
+    createStore: (storeHash) => dispatch(createStore_THUNK(storeHash))
 	};
 }
 
 export default connect(mapState, mapDispatch)(CreateStore);
+
