@@ -65,10 +65,7 @@ export function Content(props) {
 							{/* <Route exact path="/demo" component={IPFS_status} />
             <Route component={NoMatch} /> */}
 						</Switch>
-						<br />
-						<br />
-						This box with a border should fill the blue area except for the padding (just to show the middle
-						flexbox item).
+
 					</div>
 				</div>
 
