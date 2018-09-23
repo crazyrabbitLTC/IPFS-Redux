@@ -1,11 +1,11 @@
 import React from 'react';
 
-class SignupForm extends React.Component {
+class CreateStore extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isGoing: true,
-      numberOfGuests: 2
+      storeName: "",
+      storeHash: ""
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -21,29 +21,29 @@ class SignupForm extends React.Component {
     });
   }
 
+  //The onSubmit creates a complex action to submit the state to OrbitDB
+  //Later this action should submit a complete body of the Website to IPFS and
+  //return the hash of this "store".
+  //For now we should submit to OrbitDB and then return this hash to state as
+  //StoreHash.
+  // return this HASH
+  //OrbitDB r
   render() {
     return (
       <form>
         <label>
-          Is going:
+          Store Name:
           <input
-            name="isGoing"
-            type="checkbox"
-            checked={this.state.isGoing}
-            onChange={this.handleInputChange} />
-        </label>
-        <br />
-        <label>
-          Number of guests:
-          <input
-            name="numberOfGuests"
+            name="storeName"
             type="number"
-            value={this.state.numberOfGuests}
+            value={this.state.storeName}
             onChange={this.handleInputChange} />
         </label>
+        <button 
       </form>
+
     );
   }
 }
 
-export default SignupForm;
+export default CreateStore;
