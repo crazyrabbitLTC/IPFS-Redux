@@ -13,9 +13,8 @@ export function AccountBar(props) {
 						<div className="Account-Bar-Balance">{balance} ETH</div>
 						<span className="Account-Bar-Eth-Address">Address: {props.user}</span>
 						<span>
-							IPFS{' '}
 							{props.IPFS.IPFS_REQ_READY ? (
-								'Ready'
+								'IPFS Ready'
 							) : (
 								<Loader type="ThreeDots" color="green" height={10} width={30} />
 							)}
