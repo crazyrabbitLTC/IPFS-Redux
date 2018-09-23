@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import FormIpfs from './FormIpfs';
 
 export function Home(props) {
-  
 	return (
-
 		<Fragment>
-			<h3>Account: {props.user} Balance: {props.userBalance}</h3>
+			<h3>
+				Account: {props.user} Balance: {props.userBalance}
+			</h3>
 			<h3>Last Form State Saved:</h3>
 			<h3>{window.localStorage.getItem('IPFS_index')}</h3>
 			<span>{props.IPFS.IPFS_REQ_READY ? <h3>IPFS IS READY</h3> : <h3>IPFS IS NOT READY</h3>}</span>

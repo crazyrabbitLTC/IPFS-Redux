@@ -4,26 +4,24 @@ import PropTypes from 'prop-types';
 import Block from './Block';
 import Content from './Content';
 import AccountBar from './accountBar';
-import Login from './Login';
 
 export function Home(props) {
-  return (
-    <Fragment>
-      <Block {...props} />
-      <AccountBar {...props}/>
-      <Login {...props} />
-      <Content {...props} />
+	return (
+		<Fragment>
+			<Block {...props} />
+			<AccountBar {...props} />
 
-    </Fragment>
-  );
+			<Content {...props} />
+		</Fragment>
+	);
 }
 
 Home.propTypes = {
-  web3: PropTypes.object,
+	web3: PropTypes.object
 };
 
 Home.defaultProps = {
-  web3: null,
+	web3: null
 };
 
 export default Home;
