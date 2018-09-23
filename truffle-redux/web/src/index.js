@@ -5,7 +5,7 @@ import Eth from 'ethjs';
 import './index.css';
 import App from './App';
 import { store } from './state/store';
-import { updateWeb3Status, getUserAccounts_THUNK } from './state/web3/actions';
+import { updateWeb3Status, getUserAccounts_THUNK, getOrbit } from './state/web3/actions';
 import { IPFS_ready } from './state/IPFS/actions';
 import registerServiceWorker from './registerServiceWorker';
 //import OrbitDB from 'orbit-db'
@@ -41,8 +41,9 @@ window.addEventListener('load', async () => {
 		store.dispatch(IPFS_ready(true));
 		//For now we don't need orbit
 		// let database = await runOrbit(IPFSNODE);
-		runOrbit(IPFSNODE);
-		// console.log("Your database obrit is ", database)
+		const orbitInstance = await runOrbit(IPFSNODE);
+    // console.log("Your database obrit is ", database)
+    store.dispatch(getOrbit(orbitInstance))
 	});
 
 	store.dispatch(updateWeb3Status(web3));

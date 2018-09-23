@@ -1,5 +1,5 @@
 import types from './types';
-import Web3 from '../web3';
+import Web3 from 'web3';
 const web3utils = new Web3();
 
 /**
@@ -39,6 +39,13 @@ export function setWeb3Fetch(isFetching) {
 	};
 }
 
+export function putOrbitOnState(orbitInstance){
+  return {
+    type: types.PUT_ORBIT_ON_STATE,
+    orbitInstance
+  }
+}
+
 //helper function
 async function getAccounts(web3) {
 	return await web3.accounts();
@@ -67,6 +74,13 @@ export function getAddressBalance_THUNK(web3, address) {
 		dispatch(setUserBalance(web3utils.fromWei(balance.toString(10)), 'ether'));
 		dispatch(setWeb3Fetch(false));
 	};
+}
+
+export function getOrbit(orbitInstance){
+  return async (dispatch) => {
+    console.log("INSIDE ORBIT DB THUNK!!!!!");
+    dispatch(putOrbitOnState(orbitInstance))
+  }
 }
 
 export default {

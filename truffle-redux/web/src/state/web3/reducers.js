@@ -3,6 +3,7 @@ import types from './types';
 
 const web3initialState = {
   web3: null,
+  orbitdb: null,
   user: [],
   userBalance: "",
   isFetching: false,
@@ -30,6 +31,10 @@ export function web3Reducer(state = web3initialState, action) {
     return {
       ...state,
       isFetching: action.isFetching
+    }
+    case types.PUT_ORBIT_ON_STATE:
+    return {
+      ...state, orbitdb: action.orbitInstance
     }
     default:
       return state;
