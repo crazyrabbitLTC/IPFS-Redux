@@ -214,5 +214,11 @@ body {
 }
 
 .Single-Product-Title {
-  background-color: #222
+  background-color: rgba(34, 34, 34, 0.404);
+  color: white;
+
+}
+
+#80width {
+  width: 80%;
 }

@@ -17,9 +17,9 @@ class SingleProduct extends React.Component {
 	render() {
 		return (
 			<Fragment>
-				<div className="Single-Product-Description">
+				<div className="Single-Product-Description"><div id="80width">
 					<div className="Single-Product-Title">Product Name</div>
-					<div>{this.state.productHash}</div>
+					<div>{this.state.productHash}</div></div>
 				</div>
 			</Fragment>
 		);
