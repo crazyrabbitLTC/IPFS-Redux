@@ -9,7 +9,7 @@ export function contractLoading(bool){
 
 export function setTotalStores(storeCount){
   return {
-    type: types.SET_TOTAL_STORES,
+    type: types.SET_STORE,
     storeCount
   }
 }

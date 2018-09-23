@@ -3,6 +3,7 @@ import Loader from 'react-loader-spinner';
 import PropTypes from 'prop-types';
 
 export function AccountBar(props) {
+  console.log("Account bar props", props)
 	let balance = parseFloat(props.userBalance).toFixed(2);
 	return (
 		<Fragment>
@@ -25,9 +26,9 @@ export function AccountBar(props) {
 	);
 }
 
-AccountBar.propTypes = {
-	web3: PropTypes.object,
-	IPFS: PropTypes.object
-};
+// AccountBar.propTypes = {
+// 	web3: PropTypes.object,
+// 	IPFS: PropTypes.object
+// };
 
 export default AccountBar;

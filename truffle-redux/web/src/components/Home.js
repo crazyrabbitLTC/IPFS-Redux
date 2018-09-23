@@ -16,9 +16,9 @@ export function Home(props) {
 	);
 }
 
-Home.propTypes = {
-	web3: PropTypes.object
-};
+// Home.propTypes = {
+// 	web3: PropTypes.object
+// };
 
 Home.defaultProps = {
 	web3: null

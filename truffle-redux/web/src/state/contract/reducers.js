@@ -7,7 +7,7 @@ export const initialState = {
 
 export function contractReducer(state = initialState, action) {
 	switch (action.type) {
-    case types.SET_TOTAL_STORES:
+    case types.SET_STORE:
       return {
         ...state,
         totalStores: action.storeCount

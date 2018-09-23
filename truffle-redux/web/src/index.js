@@ -18,6 +18,7 @@ import {
 	web3HasError,
 	setUserBalance
 } from './state/web3/actions';
+import { contractLoading } from './state/contract/actions'
 import { IPFS_ready } from './state/IPFS/actions';
 import registerServiceWorker from './registerServiceWorker';
 //import OrbitDB from 'orbit-db'
@@ -50,64 +51,63 @@ window.addEventListener('load', async () => {
 	store.dispatch(web3IsFetching(true));
 	store.dispatch(web3IsReady(false));
 
-	if (typeof window !== 'undefined' && typeof window.web3 !== 'undefined') {
-		// We are in the browser and metamask is running.
-		web3 = new Eth(window.web3.currentProvider);
-		store.dispatch(web3IsReady(true));
-		store.dispatch(web3IsFetching(false));
-	} else {
-		// We are on the server *OR* the user is not running metamask
-		//In this case we aren't connecting to a remote, we need metamask. So this is disconnected and user is warned.
-		// const provider = new Web3.providers.HttpProvider('http://loalhost:7545');
-		// web3 = new Eth(provider);
-		store.dispatch(
-			web3HasError({ status: true, msg: 'This service requires Metamask, no Ethereum provider found' })
-		);
-		web3 = undefined;
-	}
+	web3 = LoadWeb3(web3);
 
+  //Get Web3 Accounts
 	//only handles first account
-	store.dispatch(web3IsFetching(true));
-	const accounts = await getWeb3Accounts(web3);
-	store.dispatch(setUserAccounts(accounts));
-	store.dispatch(web3IsFetching(false));
+	const accounts = await getUserWeb3Accounts(web3);
 
-	store.dispatch(web3IsFetching(true));
-	const web3status = await GetMarket(web3, marketAbi, marketBytecode);
-	store.dispatch(web3IsFetching(false));
+  //Get OPP Store Contract
+  store.dispatch(contractLoading(true))
+  await getOPPStoreContract(web3);
+  store.dispatch(contractLoading(false))
 
-	store.dispatch(web3IsFetching(true));
-	let balance = await getWeb3Balance(web3, accounts[0]);
-	store.dispatch(setUserBalance(balance));
-	store.dispatch(web3IsFetching(false));
+  //Get User Account Balance
+	await getUserAccountBalanceFromWeb3(web3, accounts);
 
-	//store.dispatch(updateWeb3Status(web3));
-	// 	store.dispatch(getUserAccounts_THUNK(web3));
-
-	// 	IPFSNODE.once('ready', async () => {
-	// 		console.log('IPFS IS READY');
-
-	// 		store.dispatch(IPFS_ready(true));
-	// 		store.dispatch(databaseReady(false));
-	// 		const orbitInstance = await runOrbit(IPFSNODE, web3account);
-
-	// 		await orbitInstance.load();
-	// 		const hash = await orbitInstance.add({ title: 'Hello', content: 'World' });
-
-	// 		console.log('Orbit hash ', hash);
-
-	// 		orbitInstance.events.on('replicated', (address) => {
-	// 			console.log('Orbit iterator', orbitInstance.iterator({ limit: -1 }).collect());
-	// 		});
-
-	// 		console.log('OrbitorbitInstance loaded', orbitInstance);
-	// 		console.log('Orbitdb hash', hash);
-
-	// 		store.dispatch(getOrbit(orbitInstance));
-	//     store.dispatch(databaseReady(true));
-	//     store.dispatch(checkContractWorks(web3));
-	// });
+	IPFS_SETUP();
 });
+
+
+
+async function getOPPStoreContract(web3) {
+  store.dispatch(web3IsFetching(true));
+  const web3status = await GetMarket(web3, marketAbi, marketBytecode);
+  store.dispatch(web3IsFetching(false));
+}
+
+async function getUserAccountBalanceFromWeb3(web3, accounts) {
+  store.dispatch(web3IsFetching(true));
+  let balance = await getWeb3Balance(web3, accounts[0]);
+  store.dispatch(setUserBalance(balance));
+  store.dispatch(web3IsFetching(false));
+}
+
+function LoadWeb3(web3) {
+  if (typeof window !== 'undefined' && typeof window.web3 !== 'undefined') {
+    // We are in the browser and metamask is running.
+    web3 = new Eth(window.web3.currentProvider);
+    store.dispatch(web3IsReady(true));
+    store.dispatch(web3IsFetching(false));
+  }
+  else {
+    // We are on the server *OR* the user is not running metamask
+    //In this case we aren't connecting to a remote, we need metamask. So this is disconnected and user is warned.
+    // const provider = new Web3.providers.HttpProvider('http://loalhost:7545');
+    // web3 = new Eth(provider);
+    store.dispatch(web3HasError({ status: true, msg: 'This service requires Metamask, no Ethereum provider found' }));
+    web3 = undefined;
+  }
+  return web3;
+}
+
+async function getUserWeb3Accounts(web3) {
+  store.dispatch(web3IsFetching(true));
+  const accounts = await getWeb3Accounts(web3);
+  store.dispatch(setUserAccounts(accounts));
+  store.dispatch(web3IsFetching(false));
+  return accounts;
+}
 
 async function getWeb3Accounts(web3) {
 	let accounts = await web3.accounts();
@@ -119,6 +119,29 @@ async function getWeb3Balance(web3, account) {
 	let balance = await web3.getBalance(account);
 	return web3utils.fromWei(balance, 'ether');
 }
+
+function IPFS_SETUP() {
+  store.dispatch(IPFS_ready(false));
+
+  IPFSNODE.once('ready', async () => {
+    console.log('IPFS IS READY');
+    store.dispatch(IPFS_ready(true));
+    //store.dispatch(databaseReady(false));
+    //const orbitInstance = await runOrbit(IPFSNODE, web3account);
+    //await orbitInstance.load();
+    //const hash = await orbitInstance.add({ title: 'Hello', content: 'World' });
+    //console.log('Orbit hash ', hash);
+    //orbitInstance.events.on('replicated', (address) => {
+    //   console.log('Orbit iterator', orbitInstance.iterator({ limit: -1 }).collect());
+    // });
+    //console.log('OrbitorbitInstance loaded', orbitInstance);
+    ///console.log('Orbitdb hash', hash);
+    //store.dispatch(getOrbit(orbitInstance));
+    //store.dispatch(databaseReady(true));
+  });
+}
+
+
 
 function GetMarket(web3, marketAbi, marketBytecode) {
 	web3.accounts().then((accounts) => {
