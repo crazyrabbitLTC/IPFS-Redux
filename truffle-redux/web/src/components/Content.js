@@ -6,13 +6,10 @@ import CreateProduct from './CreateProduct';
 import Purchases from './Purchases';
 
 export function Content(props) {
-	//if I have a store contract it should show store options
-	console.log('Content PRops: ', props);
+
+	//console.log('Content Props: ', props);
 	let storeExists = false;
 
-	// if(props.web3 && props.web3.web3.oppStore.address){
-	//   myStore = props.web3.oppStore.address;
-	// }
 
 	function getContractAddress(props) {
 		if (props.web3 && props.web3.oppStore && props.web3.oppStore.address) {

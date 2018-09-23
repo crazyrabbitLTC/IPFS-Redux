@@ -72,7 +72,6 @@ async function getBalance(web3, address) {
 //we only care about one address right now
 export function getUserAccounts_THUNK(web3) {
 	return async (dispatch) => {
-		console.log('About to call the get user accounts thunk');
 		dispatch(setWeb3Fetch(true));
 		const accounts = await getAccounts(web3);
 		dispatch(setUserAccounts(accounts[0]));
