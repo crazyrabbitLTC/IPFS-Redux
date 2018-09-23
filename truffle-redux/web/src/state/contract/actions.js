@@ -22,6 +22,13 @@ export function setTotalStores(storeCount){
     storeCount
   }
 }
+
+export function setStoreAddress(address){
+  return {
+    type: types.SET_STORE_ADDRESS,
+    address
+  }
+}
 //helper function
 
 async function getStores(web3){

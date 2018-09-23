@@ -9,13 +9,13 @@ import queryString from 'query-string';
 import CreateStore from '../containers/createStore';
 
 export function Content(props) {
-	//console.log('Content Props: ', props);
+	console.log('Content Props: ', props);
 	let storeExists = false;
 
 	function getContractAddress(props) {
-		if (props.web3 && props.web3.oppStore && props.web3.oppStore.address) {
+		if (props.contract.storeExists) {
 			storeExists = true;
-			return <span className="store-address">{props.web3.oppStore.address}://Store</span>;
+			return <span className="store-address">{props.contract.storeAddress}</span>;
 		} else {
 			return '';
 		}
@@ -49,7 +49,7 @@ export function Content(props) {
 				<div className="flexbox-item header ">
 					<div className="title-bar">
 						<span className="oppTitle">
-							<span className="big-font">Open Pay</span>
+							<span className="big-font">vendah</span>
 							<span className="oppContractAddress">{getContractAddress(props)}</span>
 						</span>
 					</div>
@@ -76,7 +76,7 @@ export function Content(props) {
 				</div>
 
 				<div className="flexbox-item footer">
-					Open Pay - <a href="www.dennisonbertram.com">Dennison Bertram</a>
+					Vendah <a href="www.dennisonbertram.com">Dennison Bertram</a>
 				</div>
 			</div>
 		</div>
