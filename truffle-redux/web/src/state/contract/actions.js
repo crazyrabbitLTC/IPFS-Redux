@@ -1,4 +1,6 @@
 import types from './types';
+import {oppMarket} from '../../index'
+
 
 export function contractLoading(bool){
   return {
@@ -32,6 +34,23 @@ export function getStoreCount(web3){
     dispatch(contractLoading(true));
     const storeCount = await getStores(web3);
     dispatch(setTotalStores(storeCount));
+    dispatch(contractLoading(false));
+
+  }
+}
+
+export function createMarket(marketHash) {
+  return async (dispatch) => {
+    console.log("About to create a store")
+    dispatch(contractLoading(true));
+    try {
+      const newStore = await oppMarket.openStore(marketHash, { gas: 300000 });
+      console.log("Transaction Hash of creating a store: ", newStore)
+      dispatch(userStoreExists(true));
+    } catch (error) {
+      console.error(error);
+      dispatch(contractLoading(false));
+    }
     dispatch(contractLoading(false));
 
   }

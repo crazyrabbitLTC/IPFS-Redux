@@ -3,12 +3,17 @@ import types from './types';
 export const initialState = {
   contractLoading: false,
   contractStoreCount: 0,
-  storeExists: 0,
+  storeExists: false,
 
 };
 
 export function contractReducer(state = initialState, action) {
 	switch (action.type) {
+    case types.USER_STORE_EXISTS:
+    return {
+      ...state,
+      storeExists: action.bool
+    }
     case types.SET_ALL_STORES:
       return {
         ...state,

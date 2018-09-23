@@ -5,6 +5,8 @@ const GET_STORE = 'GET_STORE';
 const SET_STORE = 'SET_STORE';
 const USER_STORE_EXISTS = 'USER_STORE_EXISTS';
 
+
+
 export default {
   CONTRACT_LOADING,
   GET_STORE,

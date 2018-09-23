@@ -18,10 +18,13 @@ import Web3 from 'web3';
 
 const web3utils = new Web3();
 
+//export this top level
+export let web3;
+export let oppMarket;
 //Ethereum Market Information
-const deployedContractAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
-const marketBytecode = OppStoreJson.bytecode;
-const marketAbi = OppStoreJson.abi;
+export const deployedContractAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
+export const marketBytecode = OppStoreJson.bytecode;
+export const marketAbi = OppStoreJson.abi;
 
 ReactDOM.render(
 	<Provider store={store}>
@@ -34,7 +37,7 @@ registerServiceWorker();
 window.addEventListener('load', async () => {
 	//console.log('Is there something on window? ', window.web3);
 
-	let web3;
+
 
 	store.dispatch(web3IsFetching(true));
 	store.dispatch(web3IsReady(false));
@@ -52,8 +55,9 @@ window.addEventListener('load', async () => {
 
 
 	//Get OPP Store Contract
-	store.dispatch(contractLoading(true));
-  const oppMarket = await GetMarket(web3, marketAbi, marketBytecode, deployedContractAddress);
+  store.dispatch(contractLoading(true));
+  //This is our market Contract instance
+  oppMarket = await getMarket(web3, marketAbi, marketBytecode, deployedContractAddress);
 
   console.log("This is oppMarket", oppMarket);
   //Get Total Store Count
@@ -64,13 +68,16 @@ window.addEventListener('load', async () => {
 	store.dispatch(userStoreExists(userStoreCount));
 	store.dispatch(contractLoading(false));
 
+  //things to export:
 
-
+  //add ipfs actions?
 	IPFS_SETUP();
 });
 
-async function getOPPStoreContract(web3) {
-  const market = await GetMarket(web3, marketAbi, marketBytecode, deployedContractAddress);
+
+
+export async function getOPPStoreContract(web3) {
+  const market = await getMarket(web3, marketAbi, marketBytecode, deployedContractAddress);
   return market;
 }
 
@@ -140,7 +147,7 @@ function IPFS_SETUP() {
 	});
 }
 
-async function GetMarket(web3, marketAbi, marketBytecode, deployedContractAddress) {
+export async function getMarket(web3, marketAbi, marketBytecode, deployedContractAddress) {
   let accounts;
   let market;
   let oppMarket;
