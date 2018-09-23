@@ -5,7 +5,7 @@ import Eth from 'ethjs';
 import './index.css';
 import App from './App';
 import { store } from './state/store';
-import { updateWeb3Status, getUserAccounts_THUNK, getOrbit } from './state/web3/actions';
+import { updateWeb3Status, getUserAccounts_THUNK, getOrbit, databaseReady } from './state/web3/actions';
 import { IPFS_ready } from './state/IPFS/actions';
 import registerServiceWorker from './registerServiceWorker';
 //import OrbitDB from 'orbit-db'
@@ -33,23 +33,25 @@ window.addEventListener('load', async () => {
 	const oppStore = oppStoreContract.at(deployedContractAddress);
 
 	web3.oppStore = oppStore;
-  //console.log('oppStore: ', oppStore);
-  let accounts = await web3.accounts();
-  //console.log("Web3 account", accounts);
+	//console.log('oppStore: ', oppStore);
+	let web3account = await web3.accounts();
+	//console.log("Web3 account", accounts);
 
-  store.dispatch(updateWeb3Status(web3));
+	store.dispatch(updateWeb3Status(web3));
 	store.dispatch(getUserAccounts_THUNK(web3));
 
 	IPFSNODE.once('ready', async () => {
 		console.log('IPFS IS READY');
 
 		store.dispatch(IPFS_ready(true));
-		//For now we don't need orbit
-		// let database = await runOrbit(IPFSNODE);
-		const orbitInstance = await runOrbit(IPFSNODE, accounts);
-    // console.log("Your database obrit is ", database)
-    store.dispatch(getOrbit(orbitInstance))
+
+    const orbitInstance = await runOrbit(IPFSNODE, web3account);
+
+    orbitInstance.events.on('ready', () => {
+      store.dispatch(databaseReady(true))
+    })
+
+    store.dispatch(getOrbit(orbitInstance));
+
 	});
-
-
 });

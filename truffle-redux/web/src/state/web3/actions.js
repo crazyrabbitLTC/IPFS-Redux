@@ -46,6 +46,12 @@ export function putOrbitOnState(orbitInstance){
   }
 }
 
+export function databaseReady(bool){
+  return {
+    type: types.ORBIT_DB_READY,
+    bool
+  }
+}
 //helper function
 async function getAccounts(web3) {
 	return await web3.accounts();
@@ -79,9 +85,12 @@ export function getAddressBalance_THUNK(web3, address) {
 export function getOrbit(orbitInstance){
   return async (dispatch) => {
     console.log("INSIDE ORBIT DB THUNK!!!!!");
+    dispatch(databaseReady(false))
     dispatch(putOrbitOnState(orbitInstance))
   }
 }
+
+
 
 export default {
 	updateWeb3Status
