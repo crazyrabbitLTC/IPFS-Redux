@@ -49,7 +49,7 @@ export function Content(props) {
 				<div className="flexbox-item header ">
 					<div className="title-bar">
 						<span className="oppTitle">
-							<span className="big-font">vendah</span>
+							<span className="big-font">Vendah</span>
 							<span className="oppContractAddress">{getContractAddress(props)}</span>
 						</span>
 					</div>
