@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import { injectIntl } from 'react-intl';
 import CreateProduct from './CreateProduct';
 import Purchases from './Purchases';
+import SingleProduct from './SingleProduct';
+import queryString from 'query-string'
 
 export function Content(props) {
 
@@ -60,6 +62,7 @@ export function Content(props) {
 						<Switch>
 							<Route exact path="/createProduct" component={CreateProduct} />
 							<Route exact path="/purchases" component={Purchases} />
+              <Route path={`match.path/products`} component={SingleProduct}/>
 							{/* <Route path="/about" component={About} /> */}
 
 							{/* <Route exact path="/demo" component={IPFS_status} />

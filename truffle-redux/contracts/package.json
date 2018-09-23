@@ -9,6 +9,7 @@
     "test": "truffle test"
   },
   "dependencies": {
+    "query-string": "^6.1.0",
     "shx": "^0.3.0"
   }
 }

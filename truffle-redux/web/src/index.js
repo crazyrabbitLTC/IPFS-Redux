@@ -44,24 +44,22 @@ window.addEventListener('load', async () => {
 		console.log('IPFS IS READY');
 
 		store.dispatch(IPFS_ready(true));
-    store.dispatch(databaseReady(false));
-    const orbitInstance = await runOrbit(IPFSNODE, web3account);
+		store.dispatch(databaseReady(false));
+		const orbitInstance = await runOrbit(IPFSNODE, web3account);
 
-    await orbitInstance.load();
-    const hash = await orbitInstance.add({title: 'Hello', content: 'World'});
+		await orbitInstance.load();
+		const hash = await orbitInstance.add({ title: 'Hello', content: 'World' });
 
-    console.log("Orbit hash ", hash);
+		console.log('Orbit hash ', hash);
 
-    orbitInstance.events.on('replicated', (address) => {
-      console.log("Orbit iterator", orbitInstance.iterator({ limit: -1 }).collect())
-    })
+		orbitInstance.events.on('replicated', (address) => {
+			console.log('Orbit iterator', orbitInstance.iterator({ limit: -1 }).collect());
+		});
 
+		console.log('OrbitorbitInstance loaded', orbitInstance);
+		console.log('Orbitdb hash', hash);
 
-    console.log("OrbitorbitInstance loaded", orbitInstance);
-    console.log("Orbitdb hash", hash)
-
-    store.dispatch(getOrbit(orbitInstance));
-    store.dispatch(databaseReady(true));
-
+		store.dispatch(getOrbit(orbitInstance));
+		store.dispatch(databaseReady(true));
 	});
 });
