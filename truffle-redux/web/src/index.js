@@ -33,41 +33,75 @@ ReactDOM.render(
 registerServiceWorker();
 
 window.addEventListener('load', async () => {
-  console.log('Is there something on window? ', window.web3);
-
-
+	//console.log('Is there something on window? ', window.web3);
 
 	let web3;
 
 	if (typeof window !== 'undefined' && typeof window.web3 !== 'undefined') {
 		// We are in the browser and metamask is running.
-		web3 = new Web3(window.web3.currentProvider);
+		web3 = new Eth(window.web3.currentProvider);
 	} else {
 		// We are on the server *OR* the user is not running metamask
 		const provider = new Web3.providers.HttpProvider('http://loalhost:7545');
-		web3 = new Web3(provider);
-  }
+		web3 = new Eth(provider);
+	}
 
-  web3.eth.defaultAccount = web3.eth.accounts[0];
-
-  
+	// const accounts = web3.eth.accounts;
+	// console.log("Accounts: ", accounts);
 
 	console.log('is web3 here now? ', web3);
 
-	//Now we need to check if the contract actully exists here.
-	const oppStoreContract = web3.eth.contract(OppStoreJson);
-	const oppStore = oppStoreContract.at(deployedContractAddress);
+	let accounts = await web3.accounts();
+	console.log('accounts', accounts);
 
-	web3.oppStore = oppStore;
+	const marketBytecode = OppStoreJson.bytecode;
+	const marketAbi = OppStoreJson.abi;
+
+	web3.accounts().then((accounts) => {
+		const market = web3.contract(marketAbi, marketBytecode, {
+			from: accounts[0],
+			gas: 3000000
+		});
+
+		const oppMarket = market.at(deployedContractAddress);
+		console.log('What is market', oppMarket);
+
+		oppMarket
+			.storeCount()
+			.catch((error) => {
+				// error null
+			})
+			.then((result) => {
+				// result <BigNumber ...>
+				console.log('Storecount result', result);
+      });
+
+      
+	});
+
+	// const market = web3.contract(OppStoreJson.abi).at(deployedContractAddress);
+	// console.log("What is market", market);
+
+	// let stores = await market.storeCount();
+	// console.log("Stores: ", typeof stores)
+
+	//Now we need to check if the contract actully exists here.
+	// const oppStoreContract = new web3.eth.Contract(JSON.parse(OppStoreJson));
+	// const oppStore = oppStoreContract.at(deployedContractAddress);
+
+	// console.log("OppStoreContract ", oppStoreContract);
+	// console.log("oppStore ", oppStore);
+
+	// web3.oppStore = oppStore;
 
 	//Check to see if there are zero or more stores:
 
-	try {
-		const contractAlive = await oppStore.storeCount.call();
-		console.log('What is contractAlive? ', typeof contractAlive);
-	} catch (error) {
-		console.error('the error: ', error);
-	}
+	// try {
+	// 	const contractAlive = await oppStore.storeCount.call();
+	// 	console.log('What is contractAlive? ', typeof contractAlive);
+	// } catch (error) {
+	// 	console.error('the error: ', error);
+	// }
 
 	// could remove and only use lib/web3utils
 	// 	const hasWeb3 = typeof window.web3 !== 'undefined';
