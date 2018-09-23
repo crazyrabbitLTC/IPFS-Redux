@@ -14,10 +14,24 @@ export function updateWeb3Status(payload) {
 	};
 }
 
-export function web3Ready(bool){
+export function web3IsReady(bool){
   return {
-    type:types.WEB3_READY,
+    type: types.WEB3_READY,
     bool
+  }
+}
+
+export function web3IsFetching(bool){
+  return {
+    type: types.WEB3_FETCHING,
+    bool
+  }
+}
+
+export function web3HasError(payload){
+  return {
+    type: types.WEB3_ERROR,
+    payload
   }
 }
 

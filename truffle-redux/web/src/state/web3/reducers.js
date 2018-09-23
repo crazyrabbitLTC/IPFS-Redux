@@ -2,11 +2,14 @@ import types from './types';
 
 
 const web3initialState = {
-  web3: null,
+  web3: false,
+  user: [],
+  fetching: false,
+  ready: false,
+  error: {status: false, msg: ""},
   orbitdb: null,
   databaseReady: false,
   orbitData: [],
-  user: [],
   userBalance: "",
   isFetching: false,
 };
@@ -14,6 +17,21 @@ const web3initialState = {
 
 export function web3Reducer(state = web3initialState, action) {
   switch (action.type) {
+    case types.WEB3_FETCHING:
+    return {
+      ...state,
+      fetching: action.bool
+    }
+    case types.WEB3_ERROR:
+    return {
+      ...state,
+      error: action.payload
+    }
+    case types.WEB3_READY:
+    return {
+      ...state,
+      read: action.bool
+    }
     case types.UPDATE_WEB3_STATUS:
       return {
         ...state,

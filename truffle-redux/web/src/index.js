@@ -11,7 +11,12 @@ import {
 	getOrbit,
 	databaseReady,
 	loadDatabase,
-	checkContractWorks
+	checkContractWorks,
+	setUserAccounts,
+	web3IsReady,
+	web3IsFetching,
+	web3HasError,
+	setUserBalance
 } from './state/web3/actions';
 import { IPFS_ready } from './state/IPFS/actions';
 import registerServiceWorker from './registerServiceWorker';
@@ -22,7 +27,12 @@ import OppStoreJson from './contracts/OppStore.json';
 import IPFSNODE from './ipfs';
 import Web3 from 'web3';
 
+const web3utils = new Web3();
+
+//Ethereum Market Information
 const deployedContractAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
+const marketBytecode = OppStoreJson.bytecode;
+const marketAbi = OppStoreJson.abi;
 
 ReactDOM.render(
 	<Provider store={store}>
@@ -37,108 +47,41 @@ window.addEventListener('load', async () => {
 
 	let web3;
 
+	store.dispatch(web3IsFetching(true));
+	store.dispatch(web3IsReady(false));
+
 	if (typeof window !== 'undefined' && typeof window.web3 !== 'undefined') {
 		// We are in the browser and metamask is running.
 		web3 = new Eth(window.web3.currentProvider);
+		store.dispatch(web3IsReady(true));
+		store.dispatch(web3IsFetching(false));
 	} else {
 		// We are on the server *OR* the user is not running metamask
-		const provider = new Web3.providers.HttpProvider('http://loalhost:7545');
-		web3 = new Eth(provider);
+		//In this case we aren't connecting to a remote, we need metamask. So this is disconnected and user is warned.
+		// const provider = new Web3.providers.HttpProvider('http://loalhost:7545');
+		// web3 = new Eth(provider);
+		store.dispatch(
+			web3HasError({ status: true, msg: 'This service requires Metamask, no Ethereum provider found' })
+		);
+		web3 = undefined;
 	}
 
-	// const accounts = web3.eth.accounts;
-	// console.log("Accounts: ", accounts);
+	//only handles first account
+	store.dispatch(web3IsFetching(true));
+	const accounts = await getWeb3Accounts(web3);
+	store.dispatch(setUserAccounts(accounts));
+	store.dispatch(web3IsFetching(false));
 
-	console.log('is web3 here now? ', web3);
+	store.dispatch(web3IsFetching(true));
+	const web3status = await GetMarket(web3, marketAbi, marketBytecode);
+	store.dispatch(web3IsFetching(false));
 
-	let accounts = await web3.accounts();
-	console.log('accounts', accounts);
+	store.dispatch(web3IsFetching(true));
+	let balance = await getWeb3Balance(web3, accounts[0]);
+	store.dispatch(setUserBalance(balance));
+	store.dispatch(web3IsFetching(false));
 
-	const marketBytecode = OppStoreJson.bytecode;
-	const marketAbi = OppStoreJson.abi;
-
-	web3.accounts().then((accounts) => {
-		const market = web3.contract(marketAbi, marketBytecode, {
-			from: accounts[0],
-			gas: 3000000
-		});
-
-		const oppMarket = market.at(deployedContractAddress);
-		console.log('What is market', oppMarket);
-
-		oppMarket
-			.storeCount()
-			.catch((error) => {
-				// error null
-			})
-			.then((result) => {
-				// result <BigNumber ...>
-				console.log('Storecount result', result);
-      });
-
-      
-	});
-
-	// const market = web3.contract(OppStoreJson.abi).at(deployedContractAddress);
-	// console.log("What is market", market);
-
-	// let stores = await market.storeCount();
-	// console.log("Stores: ", typeof stores)
-
-	//Now we need to check if the contract actully exists here.
-	// const oppStoreContract = new web3.eth.Contract(JSON.parse(OppStoreJson));
-	// const oppStore = oppStoreContract.at(deployedContractAddress);
-
-	// console.log("OppStoreContract ", oppStoreContract);
-	// console.log("oppStore ", oppStore);
-
-	// web3.oppStore = oppStore;
-
-	//Check to see if there are zero or more stores:
-
-	// try {
-	// 	const contractAlive = await oppStore.storeCount.call();
-	// 	console.log('What is contractAlive? ', typeof contractAlive);
-	// } catch (error) {
-	// 	console.error('the error: ', error);
-	// }
-
-	// could remove and only use lib/web3utils
-	// 	const hasWeb3 = typeof window.web3 !== 'undefined';
-	//   //const web3 = hasWeb3 ? new Eth(window.web3.currentProvider) : null;
-
-	//   console.log("The browser has web3: ", window.web3)
-
-	//   web3 = window.web3
-
-	//   //Now we need to check if the contract actully exists here.
-	// 	const oppStoreContract = web3.contract(OppStoreJson.abi);
-	//   const oppStore = oppStoreContract.at(deployedContractAddress);
-
-	//   web3.oppStore = oppStore;
-
-	//   //Check to see if there are zero or more stores:
-
-	// //   try {
-	// //     const contractAlive = await oppStore.storeCount.call();
-	// //     console.log("What is contractAlive? ", typeof contractAlive);
-	// //   } catch (error) {
-	// // console.error("the error: ", error)
-	// //   }
-
-	//   // if(contractAlive >= 0){
-	//   //   console.log("oppStore is found")
-	//   //   web3.oppStore = oppStore;
-	//   // } else {
-	//   //   console.error("oppStore is not found")
-	//   //   web3.oppStore = {};
-	//   // }
-
-	// 	//console.log('oppStore: ', oppStore);
-	// 	let web3account = await web3.accounts();
-	// 	//console.log("Web3 account", accounts);
-
-	// 	store.dispatch(updateWeb3Status(web3));
+	//store.dispatch(updateWeb3Status(web3));
 	// 	store.dispatch(getUserAccounts_THUNK(web3));
 
 	// 	IPFSNODE.once('ready', async () => {
@@ -165,3 +108,44 @@ window.addEventListener('load', async () => {
 	//     store.dispatch(checkContractWorks(web3));
 	// });
 });
+
+async function getWeb3Accounts(web3) {
+	let accounts = await web3.accounts();
+	console.log('accounts', accounts);
+	return accounts;
+}
+
+async function getWeb3Balance(web3, account) {
+	let balance = await web3.getBalance(account);
+	return web3utils.fromWei(balance, 'ether');
+}
+
+function GetMarket(web3, marketAbi, marketBytecode) {
+	web3.accounts().then((accounts) => {
+		const market = web3.contract(marketAbi, marketBytecode, {
+			from: accounts[0],
+			gas: 3000000
+		});
+		const oppMarket = market.at(deployedContractAddress);
+		console.log('What is market', oppMarket);
+		oppMarket.storeCount().catch((error) => {}).then((result) => {
+			// result <BigNumber ...>
+			console.log('Storecount result', result);
+		});
+		// oppMarket.openStore("Dennisons Store", { gas: 300000 }).catch((error) => {
+		//   console.log("error", error);
+		// }).then((result) => {
+		//   console.log("OpenedStore, any return?", result);
+		// });
+		oppMarket
+			.hasStore(accounts[0])
+			.catch((error) => {
+				console.log('error', error);
+			})
+			.then((result) => {
+				console.log('Has store result', result);
+			});
+	});
+
+	return true;
+}
