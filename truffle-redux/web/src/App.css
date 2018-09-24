@@ -1,7 +1,7 @@
 body {
 	display: flex;
 	flex-direction: column;
-	background-color: #ffffff;
+	background-color: #faecec;
 }
 .App {
 	text-align: center;
@@ -236,16 +236,20 @@ body {
 
 .create-product {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 }
 
 .create-product-form {
 	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+	flex-direction: column;
 	margin: 10px;
 }
 
+label {
+  margin: 10px;
+  font-family: monospace;
+  font-family: 'Varela Round', sans-serif;
+}
 .create-store {
 	display: flex;
 	flex-direction: row;

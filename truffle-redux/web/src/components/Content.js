@@ -76,9 +76,7 @@ export function Content(props) {
 					</div>
 				</div>
 
-				<div className="flexbox-item footer">
-					VNDR <a href="www.dennisonbertram.com">Dennison Bertram</a>
-				</div>
+				<div className="flexbox-item footer" />
 			</div>
 		</div>
 	);

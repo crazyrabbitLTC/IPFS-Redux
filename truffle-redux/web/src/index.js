@@ -23,7 +23,7 @@ import runOrbit from './OrbitDB';
 import OppStoreJson from './contracts/OppStore.json';
 
 import Web3 from 'web3';
-import IPFS from 'ipfs'
+import IPFS from 'ipfs';
 
 const web3utils = new Web3();
 
@@ -76,7 +76,8 @@ window.addEventListener('load', async () => {
 	//things to export:
 
 	//add ipfs actions?
-	IPFS_SETUP(web3);
+	const IPFSNODE = await IPFS_SETUP(web3);
+	console.log('IPFS NODE IS:', IPFSNODE);
 });
 
 export async function getOPPStoreContract(web3) {
@@ -129,34 +130,37 @@ async function getWeb3Balance(web3, account) {
 	return web3utils.fromWei(balance, 'ether');
 }
 
-function IPFS_SETUP(web3) {
-  store.dispatch(IPFS_ready(false));
+async function IPFS_SETUP(web3) {
+	store.dispatch(IPFS_ready(false));
 
-  const ipfsOptions = {
-    EXPERIMENTAL: {
-      pubsub: true
-    }
-  }
+	const ipfsOptions = {
+		EXPERIMENTAL: {
+			pubsub: true
+		}
+	};
 
-  const IPFSNODE = new IPFS(ipfsOptions)
+	const IPFSNODE = new IPFS(ipfsOptions);
 
 	IPFSNODE.once('ready', async () => {
-		console.log('IPFS IS READY');
+		console.log('IPFS IS READY. Instance is: ', IPFSNODE);
 		store.dispatch(IPFS_ready(true));
-    store.dispatch(databaseReady(false));
+		store.dispatch(databaseReady(true));
     //sending in web3 instead of an account.
-		//const orbitInstance = await runOrbit(IPFSNODE, web3);
-		//await orbitInstance.load();
-		//const hash = await orbitInstance.add({ title: 'Hello', content: 'World' });
-		//console.log('Orbit hash ', hash);
-		// orbitInstance.events.on('replicated', (address) => {
-		// 	console.log('Orbit iterator', orbitInstance.iterator({ limit: -1 }).collect());
-		// });
-		// console.log('OrbitorbitInstance loaded', orbitInstance);
-		// console.log('Orbitdb hash', hash);
-		// //store.dispatch(getOrbit(orbitInstance));
-		// store.dispatch(databaseReady(true));
+
+		const orbitInstance = await runOrbit(IPFSNODE, web3);
+		await orbitInstance.load();
+		const hash = await orbitInstance.add({ title: 'Hello', content: 'World' });
+		console.log('Orbit hash ', hash);
+		orbitInstance.events.on('replicated', (address) => {
+			console.log('Orbit iterator', orbitInstance.iterator({ limit: -1 }).collect());
+		});
+		console.log('OrbitorbitInstance loaded', orbitInstance);
+		console.log('Orbitdb hash', hash);
+		//store.dispatch(getOrbit(orbitInstance));
+		store.dispatch(databaseReady(true));
 	});
+
+	return IPFSNODE;
 }
 
 export async function getMarket(web3, marketAbi, marketBytecode, deployedContractAddress) {
