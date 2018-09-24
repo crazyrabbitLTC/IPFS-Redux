@@ -22,7 +22,7 @@ const web3utils = new Web3();
 export let web3;
 export let oppMarket;
 //Ethereum Market Information
-export const deployedContractAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
+export const deployedContractAddress = '0x2c2b9c9a4a25e24b174f26114e8926a9f2128fe4';
 export const marketBytecode = OppStoreJson.bytecode;
 export const marketAbi = OppStoreJson.abi;
 

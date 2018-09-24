@@ -1,6 +1,6 @@
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.24;
 
-contract OppStore {
+contract OPP {
 
     //This is the list of stores.
     //Store[] public oppStores;
@@ -39,7 +39,13 @@ contract OppStore {
         string hash;
     }
 
+    constructor() public {}
 
+    function getProduct(address storeOwner, uint productId) public view returns(uint,uint,uint,uint,string) {
+        Product memory product;
+        product = oppStoresMap[storeOwner].products[productId];
+        return (product.id, product.price, product.stock, product.purchaseCount, product.hash);
+    }
 
     function openStore(string storeHash) public payable{
         require(!hasStore[msg.sender]);
@@ -100,6 +106,8 @@ contract OppStore {
         //last thing send the money to the storeowner
         storeOwner.call.value(msg.value).gas(20317);
     }
+
+
 
     // restockProduct()
 

@@ -11,17 +11,14 @@ import StoreDetails from '../containers/storeDetails';
 
 export function Content(props) {
 	console.log('Content Props: ', props);
-	let storeExists = false;
 
 	function getContractAddress(props) {
-		if (props.contract.storeExists) {
-			storeExists = true;
+		if (props.contract.storeExists === true) {
 			return <span className="store-address">{props.contract.storeAddress}</span>;
 		} else {
 			return '';
 		}
 	}
-	function getMyStore(props) {}
 
 	function myStoreOptions() {
 		return (
@@ -50,7 +47,7 @@ export function Content(props) {
 				<div className="flexbox-item header ">
 					<div className="title-bar">
 						<span className="oppTitle">
-							<span className="big-font">Vendah</span>
+							<span className="big-font">Vendr</span>
 							<span className="oppContractAddress">{getContractAddress(props)}</span>
 						</span>
 					</div>
@@ -59,7 +56,7 @@ export function Content(props) {
 				<div className="flexbox-item fill-area content flexbox-item-grow">
 					<div className="fill-area-content flexbox-item-grow">
 						<div className="menu-bar">
-							<div>{storeExists ? myStoreOptions() : createStore()}</div>
+							<div>{props.contract.storeExists[0] ? myStoreOptions() : createStore()}</div>
 						</div>
 						<br />
 						<br />
@@ -78,7 +75,7 @@ export function Content(props) {
 				</div>
 
 				<div className="flexbox-item footer">
-					Vendah <a href="www.dennisonbertram.com">Dennison Bertram</a>
+					Vendr <a href="www.dennisonbertram.com">Dennison Bertram</a>
 				</div>
 			</div>
 		</div>
