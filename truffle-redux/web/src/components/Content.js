@@ -48,7 +48,7 @@ export function Content(props) {
 					<div className="title-bar">
 						<span className="oppTitle">
 							<span className="big-font">Vendr</span>
-							<span className="oppContractAddress">{getContractAddress(props)}</span>
+							<span className="oppContractAddress"><span className="store-address">{props.contract.storeAddress}</span></span>
 						</span>
 					</div>
 				</div>

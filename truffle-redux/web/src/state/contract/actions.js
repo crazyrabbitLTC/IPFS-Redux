@@ -35,7 +35,16 @@ export function setStoreDetails(store) {
 		store
 	};
 }
+
+export function setProduct(product){
+  return {
+    type: types.SET_PRODUCT,
+    product
+  }
+}
 //helper function
+
+
 
 async function getStores(web3) {
 	return await web3.oppStore.storeCount.call();
@@ -51,6 +60,16 @@ export function getStoreCount(web3) {
 	};
 }
 
+async function getStoreProduct_THUNK(productID, storeAddress, dispatch){
+  try {
+    const product = await oppMarket.getProduct(storeAddress, productID-1)
+    console.log("Inside the getStoreProduct_Thunk. Product: ", product)
+    dispatch(setProduct(product))
+  } catch (error) {
+    console.error(error);
+  }
+
+}
 export function getStoreDetails_THUNK(storeAddress) {
 	return async (dispatch) => {
 		console.log('About to call the contract to load the store details: ', storeAddress);
