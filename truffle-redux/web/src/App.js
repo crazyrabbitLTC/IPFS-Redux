@@ -23,6 +23,7 @@ function App() {
 						<Route exact path="/demo" component={IPFS_status} />
 						<Route component={NoMatch} />
 					</Switch>
+          
 				</div>
 			</Router>
 		</IntlProvider>

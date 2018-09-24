@@ -35,7 +35,16 @@ export function setStoreDetails(store) {
 		store
 	};
 }
+
+export function setProduct(product){
+  return {
+    type: types.SET_PRODUCT,
+    product
+  }
+}
 //helper function
+
+
 
 async function getStores(web3) {
 	return await web3.oppStore.storeCount.call();
@@ -51,13 +60,29 @@ export function getStoreCount(web3) {
 	};
 }
 
+async function getStoreProduct_THUNK(productID, storeAddress, dispatch){
+  try {
+    const product = await oppMarket.getProduct(storeAddress, productID)
+    console.log("Inside the getStoreProduct_Thunk. Product: ", product)
+    dispatch(setProduct(product))
+  } catch (error) {
+    console.error(error);
+  }
+
+}
 export function getStoreDetails_THUNK(storeAddress) {
 	return async (dispatch) => {
-		console.log('About to call the contract to load the store details: ', storeAddress);
 		dispatch(contractLoading(true));
 		try {
 			const store = await oppMarket.oppStoresMap(storeAddress);
-			console.log('The Store Detailss', store);
+      console.log("This is the get store details thunk return: ", store)
+      const productCount = store.productCount.toNumber();
+      console.log("and this is the store details productcount", productCount)
+      // let array;
+      // for(let x=0; x< productCount; x++){
+      //   array.push(dispatch(getStoreProduct_THUNK(x, storeAddress)))
+      // }
+      // Promise.all(array);
 			dispatch(setStoreDetails(store));
 		} catch (error) {
 			console.error;

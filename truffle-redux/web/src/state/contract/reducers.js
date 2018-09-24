@@ -5,12 +5,18 @@ export const initialState = {
   contractStoreCount: 0,
   storeExists: false,
   storeAddress: "0x0",
-  store: {}
+  store: {},
+  products: []
 
 };
 
 export function contractReducer(state = initialState, action) {
 	switch (action.type) {
+    case types.SET_PRODUCT:
+    return {
+      ...state,
+      products: [...state.products, action.product]
+    }
     case types.USER_STORE_EXISTS:
     return {
       ...state,
