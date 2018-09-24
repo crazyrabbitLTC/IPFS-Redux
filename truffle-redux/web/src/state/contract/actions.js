@@ -29,6 +29,13 @@ export function setStoreAddress(address){
     address
   }
 }
+
+export function setStoreDetails(store){
+  return {
+    type: types.SET_STORE_DETAILS,
+    store
+  }
+}
 //helper function
 
 async function getStores(web3){
@@ -43,6 +50,22 @@ export function getStoreCount(web3){
     dispatch(setTotalStores(storeCount));
     dispatch(contractLoading(false));
 
+  }
+}
+
+
+export function getStoreDetails_THUNK(storeAddress){
+  return async(dispatch) => {
+    console.log("About to call the contract to load the products")
+    dispatch(contractLoading(true));
+    try {
+      const store = await oppMarket.oppStoresMap(storeAddress);
+      console.log("The Store Detailss", store)
+      dispatch(setStoreDetails(store));
+    } catch (error) {
+      console.error
+    }
+    dispatch(contractLoading(false));
   }
 }
 

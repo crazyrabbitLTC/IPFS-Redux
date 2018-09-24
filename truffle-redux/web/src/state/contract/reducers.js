@@ -4,7 +4,8 @@ export const initialState = {
   contractLoading: false,
   contractStoreCount: 0,
   storeExists: false,
-  storeAddress: "0x0"
+  storeAddress: "0x0",
+  store: {}
 
 };
 
@@ -14,6 +15,11 @@ export function contractReducer(state = initialState, action) {
     return {
       ...state,
       storeExists: action.bool
+    }
+    case types.SET_STORE_DETAILS:
+    return {
+      ...state,
+      store: action.store
     }
     case types.SET_STORE_ADDRESS:
     return {

@@ -7,6 +7,7 @@ import Purchases from './Purchases';
 import SingleProduct from './SingleProduct';
 import queryString from 'query-string';
 import CreateStore from '../containers/createStore';
+import StoreDetails from '../containers/storeDetails';
 
 export function Content(props) {
 	console.log('Content Props: ', props);
@@ -72,6 +73,7 @@ export function Content(props) {
 							{/* <Route exact path="/demo" component={IPFS_status} />
             <Route component={NoMatch} /> */}
 						</Switch>
+						<StoreDetails />
 					</div>
 				</div>
 
