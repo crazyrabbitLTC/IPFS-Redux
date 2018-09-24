@@ -5,7 +5,8 @@ import StoreDetails from '../components/StoreDetails';
 
 function mapState(state) {
 	return {
-		contract: state.contract
+    contract: state.contract,
+    web3: state.web3
 	};
 }
 

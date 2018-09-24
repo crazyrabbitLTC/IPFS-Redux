@@ -24,7 +24,8 @@ class StoreDetails extends React.Component {
 
   loadProducts(){
     console.log("Calling the thunk for store details");
-    this.props.getStore(this.state.storeAddress);
+    //this calls the user store, of course it shoudl call any store.
+    this.props.getStore(this.props.web3.user[0]);
 
   }
 	componentDidMount() {
@@ -35,17 +36,16 @@ class StoreDetails extends React.Component {
 
 		// this.setState(() => {
 		// 	storeAddress: this.props.contract.storeAddress;
-		// });
+    // });
+
+
 	}
 
 	componentDidUpdate(prevProps) {
-		if (this.props.contract.storeAddress !== prevProps.contract.storeAddress) {
-      // if(this.state.storeAddress !== '0x0'){
-      //   this.props.getStore(this.state.storeAddress);
-      //   console.log("Calling the thunk for store details");
-      // }
+		if (this.props.contract !== prevProps.contract) {
+
 			this.setState(() => {
-				return ({storeAddress: this.props.contract.storeAddress})
+				return ({storeAddress: this.props.contract.storeAddress, store: this.props.contract.store})
 			});
     }
 
@@ -54,8 +54,10 @@ class StoreDetails extends React.Component {
 	render() {
 		console.log('The Store Details props: ', this.props);
 		return (
-			<div className="store-details" onClick={() => {this.loadProducts()}}>
-				This is the StoreDetails. Address {this.state.storeAddress}
+			<div className="store-details" >
+      <Button bsStyle="info" onClick={() => {this.loadProducts()}} >Load Store</Button>
+        This is the StoreDetails. <br/>Address {this.state.storeAddress}
+        <div>Store Name: {JSON.stringify(this.state.store)}</div>
 			</div>
 		);
 	}
