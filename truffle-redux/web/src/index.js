@@ -77,7 +77,12 @@ window.addEventListener('load', async () => {
 
 	//add ipfs actions?
 	const IPFSNODE = await IPFS_SETUP(web3);
-	console.log('IPFS NODE IS:', IPFSNODE);
+  console.log('IPFS NODE IS:', IPFSNODE);
+
+  //put KEY THINGS on window
+  window.IPFSNODE = IPFSNODE;
+  window.oppMarketContract = oppMarket;
+
 });
 
 export async function getOPPStoreContract(web3) {
@@ -156,7 +161,11 @@ async function IPFS_SETUP(web3) {
 		});
 		console.log('OrbitorbitInstance loaded', orbitInstance);
 		console.log('Orbitdb hash', hash);
-		//store.dispatch(getOrbit(orbitInstance));
+    //store.dispatch(getOrbit(orbitInstance));
+
+    //put ORBIT DB on Window
+    window.OrbitDBInstance = orbitInstance;
+
 		store.dispatch(databaseReady(true));
 	});
 
