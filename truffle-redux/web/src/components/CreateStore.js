@@ -52,7 +52,7 @@ class CreateStore extends React.Component {
 					/>
 				</label>
 
-					<Button bsStyle="info" onClick={() => {this.callCreateStore()}} >Info</Button>
+					<Button bsStyle="info" onClick={() => {this.callCreateStore()}} >Create</Button>
 
 			</form>
 		);

@@ -6,7 +6,7 @@ import './index.css';
 import App from './App';
 import { store } from './state/store';
 import { setUserAccounts, web3IsReady, web3IsFetching, web3HasError, setUserBalance } from './state/web3/actions';
-import { contractLoading, setTotalStores, userStoreExists } from './state/contract/actions';
+import { contractLoading, setTotalStores, userStoreExists, setStoreAddress } from './state/contract/actions';
 import { IPFS_ready } from './state/IPFS/actions';
 import registerServiceWorker from './registerServiceWorker';
 //import OrbitDB from 'orbit-db'
@@ -37,48 +37,42 @@ registerServiceWorker();
 window.addEventListener('load', async () => {
 	//console.log('Is there something on window? ', window.web3);
 
-
-
 	store.dispatch(web3IsFetching(true));
 	store.dispatch(web3IsReady(false));
 
 	web3 = LoadWeb3(web3);
 
-
 	//Get Web3 Accounts
 	//only handles first account
-  const accounts = await getUserWeb3Accounts(web3);
+	const accounts = await getUserWeb3Accounts(web3);
 
-
-  	//Get User Account Balance
+	//Get User Account Balance
 	await getUserAccountBalanceFromWeb3(web3, accounts);
 
-
 	//Get OPP Store Contract
-  store.dispatch(contractLoading(true));
-  //This is our market Contract instance
-  oppMarket = await getMarket(web3, marketAbi, marketBytecode, deployedContractAddress);
+	store.dispatch(contractLoading(true));
+	//This is our market Contract instance
+	oppMarket = await getMarket(web3, marketAbi, marketBytecode, deployedContractAddress);
 
-  console.log("This is oppMarket", oppMarket);
-  //Get Total Store Count
-  const totalOppStores = await getTotalStores(oppMarket);
-  store.dispatch(setTotalStores(totalOppStores));
+	console.log('This is oppMarket', oppMarket);
+	store.dispatch(setStoreAddress(oppMarket.address));
+	//Get Total Store Count
+	const totalOppStores = await getTotalStores(oppMarket);
+	store.dispatch(setTotalStores(totalOppStores));
 	//Check if User Already has a store.
-	const userStoreCount = await doesUserHaveAStore(oppMarket,accounts[0]);
+	const userStoreCount = await doesUserHaveAStore(oppMarket, accounts[0]);
 	store.dispatch(userStoreExists(userStoreCount));
 	store.dispatch(contractLoading(false));
 
-  //things to export:
+	//things to export:
 
-  //add ipfs actions?
+	//add ipfs actions?
 	IPFS_SETUP();
 });
 
-
-
 export async function getOPPStoreContract(web3) {
-  const market = await getMarket(web3, marketAbi, marketBytecode, deployedContractAddress);
-  return market;
+	const market = await getMarket(web3, marketAbi, marketBytecode, deployedContractAddress);
+	return market;
 }
 
 async function getUserAccountBalanceFromWeb3(web3, accounts) {
@@ -148,42 +142,41 @@ function IPFS_SETUP() {
 }
 
 export async function getMarket(web3, marketAbi, marketBytecode, deployedContractAddress) {
-  let accounts;
-  let market;
-  let oppMarket;
+	let accounts;
+	let market;
+	let oppMarket;
 
-  try{
-    accounts = await web3.accounts();
-  } catch(error){
-    console.log(error)
-  }
-  console.log("Get Market accounts is: ", accounts);
+	try {
+		accounts = await web3.accounts();
+	} catch (error) {
+		console.log(error);
+	}
+	console.log('Get Market accounts is: ', accounts);
 
-  try {
-    market = await web3.contract(marketAbi, marketBytecode, {
+	try {
+		market = await web3.contract(marketAbi, marketBytecode, {
 			from: accounts[0],
 			gas: 3000000
 		});
-  } catch (error) {
-    console.log(error)
-  }
+	} catch (error) {
+		console.log(error);
+	}
 
-  console.log("Get Market market is: ", market)
+	console.log('Get Market market is: ', market);
 
-  try {
-    oppMarket = await market.at(deployedContractAddress);
-  } catch (error) {
-    console.log(error)
-  }
+	try {
+		oppMarket = await market.at(deployedContractAddress);
+	} catch (error) {
+		console.log(error);
+	}
 
-  return oppMarket;
-
+	return oppMarket;
 }
 
 async function doesUserHaveAStore(oppMarket, account) {
 	try {
-    const stores = await oppMarket.hasStore(account);
-    console.log("Return Value for User Store Existing: ", stores)
+		const stores = await oppMarket.hasStore(account);
+		console.log('Return Value for User Store Existing: ', stores);
 		return stores;
 	} catch (error) {
 		console.error(error);
@@ -191,48 +184,41 @@ async function doesUserHaveAStore(oppMarket, account) {
 	}
 }
 
-async function getTotalStores(oppMarket){
-  try {
-    const storeCount = await oppMarket.storeCount();
-    console.log("Return Value of get Total stores: ", storeCount)
+async function getTotalStores(oppMarket) {
+	try {
+		const storeCount = await oppMarket.storeCount();
+		console.log('Return Value of get Total stores: ', storeCount);
 
-    return storeCount;
-  } catch (error) {
-    console.log(error);
-    return 0;
-  }
+		return storeCount;
+	} catch (error) {
+		console.log(error);
+		return 0;
+	}
 }
 
+// web3.accounts().then((accounts) => {
+//   const market = web3.contract(marketAbi, marketBytecode, {
+//     from: accounts[0],
+//     gas: 3000000
+//   });
+//   const oppMarket = market.at(deployedContractAddress);
+//   console.log('What is market', oppMarket);
+// oppMarket.storeCount().catch((error) => {}).then((result) => {
+// 	// result <BigNumber ...>
+// 	console.log('Storecount result', result);
+// });
+// oppMarket.openStore("Dennisons Store", { gas: 300000 }).catch((error) => {
+//   console.log("error", error);
+// }).then((result) => {
+//   console.log("OpenedStore, any return?", result);
+// });
 
-
-
-
-
-
-
-    // web3.accounts().then((accounts) => {
-    //   const market = web3.contract(marketAbi, marketBytecode, {
-    //     from: accounts[0],
-    //     gas: 3000000
-    //   });
-    //   const oppMarket = market.at(deployedContractAddress);
-    //   console.log('What is market', oppMarket);
-		// oppMarket.storeCount().catch((error) => {}).then((result) => {
-		// 	// result <BigNumber ...>
-		// 	console.log('Storecount result', result);
-		// });
-		// oppMarket.openStore("Dennisons Store", { gas: 300000 }).catch((error) => {
-		//   console.log("error", error);
-		// }).then((result) => {
-		//   console.log("OpenedStore, any return?", result);
-    // });
-
-		// oppMarket
-		// 	.hasStore(accounts[0])
-		// 	.catch((error) => {
-		// 		console.log('error', error);
-		// 	})
-		// 	.then((result) => {
-		// 		console.log('Has store result', result);
-    //   });
-    //   return oppMarket
+// oppMarket
+// 	.hasStore(accounts[0])
+// 	.catch((error) => {
+// 		console.log('error', error);
+// 	})
+// 	.then((result) => {
+// 		console.log('Has store result', result);
+//   });
+//   return oppMarket

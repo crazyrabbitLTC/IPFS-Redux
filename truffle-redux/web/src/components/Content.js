@@ -2,20 +2,21 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import { injectIntl } from 'react-intl';
-import CreateProduct from './CreateProduct';
+import CreateProduct from '../containers/createProduct';
 import Purchases from './Purchases';
 import SingleProduct from './SingleProduct';
 import queryString from 'query-string';
 import CreateStore from '../containers/createStore';
+import StoreDetails from '../containers/storeDetails';
 
 export function Content(props) {
-	//console.log('Content Props: ', props);
+	console.log('Content Props: ', props);
 	let storeExists = false;
 
 	function getContractAddress(props) {
-		if (props.web3 && props.web3.oppStore && props.web3.oppStore.address) {
+		if (props.contract.storeExists) {
 			storeExists = true;
-			return <span className="store-address">{props.web3.oppStore.address}://Store</span>;
+			return <span className="store-address">{props.contract.storeAddress}</span>;
 		} else {
 			return '';
 		}
@@ -49,7 +50,7 @@ export function Content(props) {
 				<div className="flexbox-item header ">
 					<div className="title-bar">
 						<span className="oppTitle">
-							<span className="big-font">Open Pay</span>
+							<span className="big-font">Vendah</span>
 							<span className="oppContractAddress">{getContractAddress(props)}</span>
 						</span>
 					</div>
@@ -72,11 +73,12 @@ export function Content(props) {
 							{/* <Route exact path="/demo" component={IPFS_status} />
             <Route component={NoMatch} /> */}
 						</Switch>
+						<StoreDetails />
 					</div>
 				</div>
 
 				<div className="flexbox-item footer">
-					Open Pay - <a href="www.dennisonbertram.com">Dennison Bertram</a>
+					Vendah <a href="www.dennisonbertram.com">Dennison Bertram</a>
 				</div>
 			</div>
 		</div>
