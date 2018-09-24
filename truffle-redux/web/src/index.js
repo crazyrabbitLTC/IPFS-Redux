@@ -31,7 +31,7 @@ const web3utils = new Web3();
 export let web3;
 export let oppMarket;
 //Ethereum Market Information
-export const deployedContractAddress = '0x2c2b9c9a4a25e24b174f26114e8926a9f2128fe4';
+export const deployedContractAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
 export const marketBytecode = OppStoreJson.bytecode;
 export const marketAbi = OppStoreJson.abi;
 
@@ -77,12 +77,11 @@ window.addEventListener('load', async () => {
 
 	//add ipfs actions?
 	const IPFSNODE = await IPFS_SETUP(web3);
-  console.log('IPFS NODE IS:', IPFSNODE);
+	console.log('IPFS NODE IS:', IPFSNODE);
 
-  //put KEY THINGS on window
-  window.IPFSNODE = IPFSNODE;
-  window.oppMarketContract = oppMarket;
-
+	//put KEY THINGS on window
+	window.IPFSNODE = IPFSNODE;
+	window.oppMarketContract = oppMarket;
 });
 
 export async function getOPPStoreContract(web3) {
@@ -150,7 +149,7 @@ async function IPFS_SETUP(web3) {
 		console.log('IPFS IS READY. Instance is: ', IPFSNODE);
 		store.dispatch(IPFS_ready(true));
 		store.dispatch(databaseReady(true));
-    //sending in web3 instead of an account.
+		//sending in web3 instead of an account.
 
 		const orbitInstance = await runOrbit(IPFSNODE, web3);
 		await orbitInstance.load();
@@ -161,10 +160,10 @@ async function IPFS_SETUP(web3) {
 		});
 		console.log('OrbitorbitInstance loaded', orbitInstance);
 		console.log('Orbitdb hash', hash);
-    //store.dispatch(getOrbit(orbitInstance));
+		//store.dispatch(getOrbit(orbitInstance));
 
-    //put ORBIT DB on Window
-    window.OrbitDBInstance = orbitInstance;
+		//put ORBIT DB on Window
+		window.OrbitDBInstance = orbitInstance;
 
 		store.dispatch(databaseReady(true));
 	});

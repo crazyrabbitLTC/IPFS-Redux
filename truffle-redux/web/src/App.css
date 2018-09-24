@@ -194,7 +194,8 @@ body {
 	padding-left: 8px;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
+  height: 68px;
+  justify-content: flex-end;
 }
 
 .big-font {
@@ -241,10 +242,14 @@ body {
 
 .create-product-form {
 	display: flex;
-	flex-direction: column;
+  flex-direction: column;
+  align-items: flex-start;
 	margin: 10px;
 }
 
+input {
+  margin-left: 5px;
+}
 label {
   margin: 10px;
   font-family: monospace;
@@ -290,4 +295,11 @@ label {
 	border-color: #2d3d42;
 	margin-top: 5px;
 	margin-bottom: 10px;
+}
+
+.product-describe {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start
 }

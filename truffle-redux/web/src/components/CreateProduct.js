@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
-import IPFSNODE from '../ipfs';
+import { Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 class CreateProduct extends React.Component {
 	constructor(props) {
@@ -10,7 +9,8 @@ class CreateProduct extends React.Component {
 			productDescription: '',
 			productName: '',
 			quantity: 0,
-			price: 0
+			price: 0,
+			previousHash: '0x0'
 		};
 
 		this.handleInputChange = this.handleInputChange.bind(this);
@@ -26,68 +26,109 @@ class CreateProduct extends React.Component {
 		});
 	}
 
-	createProduct() {
-		let hash = this.createInIPFS();
+	async createProduct() {
+		let hash = await this.createInIPFS();
 		let price = this.state.price;
 		//mocking productID, really this should come from the contract in advance
 		let productID = 1;
+
 		this.props.createProduct(price, productID, hash);
+		console.log('creat product fired price and hash are', price, hash);
 	}
 
-	createInIPFS() {
-		//right now we mockIPFS
-		return 'DEMO HASH!';
+	async createInIPFS() {
+		const IPFSNODE = window.IPFSNODE;
+		console.log('WHAT IS IPFSNODE? ', IPFSNODE);
+		console.log('WHAT IS OPP MARKET? ', window.oppMarketContract);
+
+		const state = {
+			productDescription: this.state.productDescription,
+			productName: this.state.productName,
+			quantity: this.state.quantity,
+			price: this.state.price,
+			previousHash: this.state.previousHash
+		};
+
+		console.log('THIS IS THE STATE TO PUT IN IPFS: ', state);
+		const addedStateFile = await IPFSNODE.files.add({
+			path: 'demo.txt',
+			content: Buffer.from(JSON.stringify(state))
+		});
+		console.log('The file hash in IPFS: ', addedStateFile[0].hash);
+
+		this.setState(() => {
+			return { ...this.state, previousHash: addedStateFile[0].hash };
+		});
+
+		return addedStateFile[0].hash;
 	}
 
 	render() {
 		return (
-			<div className="create-product">
-				<form className="create-product-form">
-					<span className="create-product-form">Create Product:</span>
+			<div>
+				<div>
+					{this.state.previousHash !== '0x0' ? (
+						<div className="product-describe">
+							<div>State Object:</div>
 
-					<label>
-						Product Name:
-						<input
-							name="productName"
-							type="text"
-							value={this.state.productName}
-							onChange={this.handleInputChange}
-						/>
-					</label>
+								<a href={"http://ipfs.io/ipfs/" + this.state.previousHash} target="_blank">State Object</a>
+						</div>
+					) : (
+						<span />
+					)}
+				</div>
+				<div className="create-product">
+					<form className="create-product-form">
+						<span className="create-product-form">Create Product:</span>
 
-					<label>
-						Product Description:
-						<input
-							name="productDescription"
-							type="text"
-							value={this.state.productDescription}
-							onChange={this.handleInputChange}
-							defaultValue="Product Description"
-						/>
-					</label>
+						<label>
+							Product Name:
+							<input
+								name="productName"
+								type="text"
+								value={this.state.productName}
+								onChange={this.handleInputChange}
+							/>
+						</label>
 
-					<label>
-						Quantity:
-						<input
-							name="quantity"
-							type="number"
-							value={this.state.quantity}
-							onChange={this.handleInputChange}
-						/>
-					</label>
-					<label>
-						Price:
-						<input name="price" type="number" value={this.state.price} onChange={this.handleInputChange} />
-					</label>
-					<Button
-						bsStyle="info"
-						onClick={() => {
-							this.createProduct();
-						}}
-					>
-						Create
-					</Button>
-				</form>
+						<label>
+							Product Description:
+							<input
+								name="productDescription"
+								type="text"
+								value={this.state.productDescription}
+								onChange={this.handleInputChange}
+							/>
+						</label>
+
+						<label>
+							Quantity:
+							<input
+								name="quantity"
+								type="number"
+								value={this.state.quantity}
+								onChange={this.handleInputChange}
+							/>
+						</label>
+						<label>
+							Price:
+							<input
+								name="price"
+								type="number"
+								value={this.state.price}
+								onChange={this.handleInputChange}
+							/>
+						</label>
+						<Button
+							bsStyle="info"
+							onClick={() => {
+								this.createProduct();
+							}}
+						>
+							Create
+						</Button>
+					</form>
+				</div>
 			</div>
 		);
 	}

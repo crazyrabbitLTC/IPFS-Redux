@@ -3,7 +3,7 @@ import Loader from 'react-loader-spinner';
 import { Tooltip } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-export function AccountBar(props) {
+export function AccountBar(props = 0) {
 	console.log('Account bar props', props);
 	let balance = parseFloat(props.userBalance).toFixed(2);
 	return (
