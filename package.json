@@ -29,6 +29,7 @@
     "nodemon": "^1.18.4",
     "orbit-db": "^0.19.9",
     "react": "^16.5.2",
-    "react-redux": "^5.0.7"
+    "react-redux": "^5.0.7",
+    "react-tooltip": "^3.8.4"
   }
 }

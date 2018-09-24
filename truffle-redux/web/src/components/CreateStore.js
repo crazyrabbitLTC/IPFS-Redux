@@ -41,7 +41,7 @@ class CreateStore extends React.Component {
 		console.log('Inside create store component, the prosp are: ', this.props);
 
 		return (
-			<form>
+			<form className="create-store">
 				<label>
 					Store Name:
 					<input

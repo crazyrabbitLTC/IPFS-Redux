@@ -5,7 +5,15 @@ import Eth from 'ethjs';
 import './index.css';
 import App from './App';
 import { store } from './state/store';
-import { setUserAccounts, web3IsReady, web3IsFetching, web3HasError, setUserBalance } from './state/web3/actions';
+import {
+	setUserAccounts,
+	web3IsReady,
+	databaseReady,
+	web3IsFetching,
+	web3HasError,
+	setUserBalance,
+	getOrbit
+} from './state/web3/actions';
 import { contractLoading, setTotalStores, userStoreExists, setStoreAddress } from './state/contract/actions';
 import { IPFS_ready } from './state/IPFS/actions';
 import registerServiceWorker from './registerServiceWorker';
@@ -13,8 +21,9 @@ import registerServiceWorker from './registerServiceWorker';
 import runOrbit from './OrbitDB';
 //must be a simpler ;way
 import OppStoreJson from './contracts/OppStore.json';
-import IPFSNODE from './ipfs';
+
 import Web3 from 'web3';
+import IPFS from 'ipfs'
 
 const web3utils = new Web3();
 
@@ -67,7 +76,7 @@ window.addEventListener('load', async () => {
 	//things to export:
 
 	//add ipfs actions?
-	IPFS_SETUP();
+	IPFS_SETUP(web3);
 });
 
 export async function getOPPStoreContract(web3) {
@@ -120,24 +129,33 @@ async function getWeb3Balance(web3, account) {
 	return web3utils.fromWei(balance, 'ether');
 }
 
-function IPFS_SETUP() {
-	store.dispatch(IPFS_ready(false));
+function IPFS_SETUP(web3) {
+  store.dispatch(IPFS_ready(false));
+
+  const ipfsOptions = {
+    EXPERIMENTAL: {
+      pubsub: true
+    }
+  }
+
+  const IPFSNODE = new IPFS(ipfsOptions)
 
 	IPFSNODE.once('ready', async () => {
 		console.log('IPFS IS READY');
 		store.dispatch(IPFS_ready(true));
-		//store.dispatch(databaseReady(false));
-		//const orbitInstance = await runOrbit(IPFSNODE, web3account);
+    store.dispatch(databaseReady(false));
+    //sending in web3 instead of an account.
+		//const orbitInstance = await runOrbit(IPFSNODE, web3);
 		//await orbitInstance.load();
 		//const hash = await orbitInstance.add({ title: 'Hello', content: 'World' });
 		//console.log('Orbit hash ', hash);
-		//orbitInstance.events.on('replicated', (address) => {
-		//   console.log('Orbit iterator', orbitInstance.iterator({ limit: -1 }).collect());
+		// orbitInstance.events.on('replicated', (address) => {
+		// 	console.log('Orbit iterator', orbitInstance.iterator({ limit: -1 }).collect());
 		// });
-		//console.log('OrbitorbitInstance loaded', orbitInstance);
-		///console.log('Orbitdb hash', hash);
-		//store.dispatch(getOrbit(orbitInstance));
-		//store.dispatch(databaseReady(true));
+		// console.log('OrbitorbitInstance loaded', orbitInstance);
+		// console.log('Orbitdb hash', hash);
+		// //store.dispatch(getOrbit(orbitInstance));
+		// store.dispatch(databaseReady(true));
 	});
 }
 
@@ -195,30 +213,3 @@ async function getTotalStores(oppMarket) {
 		return 0;
 	}
 }
-
-// web3.accounts().then((accounts) => {
-//   const market = web3.contract(marketAbi, marketBytecode, {
-//     from: accounts[0],
-//     gas: 3000000
-//   });
-//   const oppMarket = market.at(deployedContractAddress);
-//   console.log('What is market', oppMarket);
-// oppMarket.storeCount().catch((error) => {}).then((result) => {
-// 	// result <BigNumber ...>
-// 	console.log('Storecount result', result);
-// });
-// oppMarket.openStore("Dennisons Store", { gas: 300000 }).catch((error) => {
-//   console.log("error", error);
-// }).then((result) => {
-//   console.log("OpenedStore, any return?", result);
-// });
-
-// oppMarket
-// 	.hasStore(accounts[0])
-// 	.catch((error) => {
-// 		console.log('error', error);
-// 	})
-// 	.then((result) => {
-// 		console.log('Has store result', result);
-//   });
-//   return oppMarket

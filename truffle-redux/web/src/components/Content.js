@@ -47,8 +47,10 @@ export function Content(props) {
 				<div className="flexbox-item header ">
 					<div className="title-bar">
 						<span className="oppTitle">
-							<span className="big-font">Vendr</span>
-							<span className="oppContractAddress"><span className="store-address">{props.contract.storeAddress}</span></span>
+							<span className="big-font">VNDR</span>
+							<span className="oppContractAddress">
+								<span className="store-address">{props.contract.storeAddress}</span>
+							</span>
 						</span>
 					</div>
 				</div>
@@ -58,24 +60,24 @@ export function Content(props) {
 						<div className="menu-bar">
 							<div>{props.contract.storeExists[0] ? myStoreOptions() : createStore()}</div>
 						</div>
-						<br />
-						<br />
-						<Switch>
-							<Route exact path="/createProduct" component={CreateProduct} />
-							<Route exact path="/purchases" component={Purchases} />
-							<Route path={`/products`} component={SingleProduct} />
-							<Route exact path="/createStore" component={CreateStore} />
-							{/* <Route path="/about" component={About} /> */}
+						<div className="content-body">
+							<Switch>
+								<Route exact path="/createProduct" component={CreateProduct} />
+								<Route exact path="/purchases" component={Purchases} />
+								<Route path={`/products`} component={SingleProduct} />
+								<Route exact path="/createStore" component={CreateStore} />
+								{/* <Route path="/about" component={About} /> */}
 
-							{/* <Route exact path="/demo" component={IPFS_status} />
+								{/* <Route exact path="/demo" component={IPFS_status} />
             <Route component={NoMatch} /> */}
-						</Switch>
-						<StoreDetails />
+							</Switch>
+							<StoreDetails />
+						</div>
 					</div>
 				</div>
 
 				<div className="flexbox-item footer">
-					Vendr <a href="www.dennisonbertram.com">Dennison Bertram</a>
+					VNDR <a href="www.dennisonbertram.com">Dennison Bertram</a>
 				</div>
 			</div>
 		</div>

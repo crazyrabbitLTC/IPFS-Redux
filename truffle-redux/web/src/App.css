@@ -1,7 +1,7 @@
 body {
 	display: flex;
 	flex-direction: column;
-	background-color: #faecec;
+	background-color: #ffffff;
 }
 .App {
 	text-align: center;
@@ -10,6 +10,20 @@ body {
 	background-color: #faecec;
 }
 
+.app-container {
+	width: 80%;
+}
+
+a {
+	color: #595e62;
+}
+
+a:hover,
+a:visited,
+a:link,
+a:active {
+	text-decoration: none;
+}
 .App-logo {
 	animation: App-logo-spin infinite 20s linear;
 	height: 80px;
@@ -62,6 +76,7 @@ body {
 	justify-content: space-between;
 	margin-left: 4px;
 	margin-right: 4px;
+	margin-top: 2px;
 }
 
 .Eth {
@@ -183,7 +198,8 @@ body {
 }
 
 .big-font {
-	font-size: 3em;
+	font-size: 4em;
+	margin-bottom: -32px;
 }
 .oppContractAddress {
 	justify-self: flex-end;
@@ -202,36 +218,72 @@ body {
 	flex-direction: row;
 	justify-content: flex-start;
 	margin-left: 8px;
+	margin-bottom: 20px;
 }
 .nav-button {
 	border-bottom: 1px dotted;
 }
 
 .Single-Product-Description {
-  display: flex;
-  flex-direction: column;
-
+	display: flex;
+	flex-direction: column;
 }
 
 .Single-Product-Title {
-  background-color: rgba(34, 34, 34, 0.404);
-  color: white;
-
+	background-color: rgba(34, 34, 34, 0.404);
+	color: white;
 }
 
 .create-product {
-  display: flex;
-  flex-direction: row;
-  
+	display: flex;
+	flex-direction: row;
 }
 
 .create-product-form {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 10px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: 10px;
 }
 
-#80width {
-  width: 80%;
+.create-store {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-content: flex-start;
+}
+
+.content-body {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.store-details {
+	display: flex;
+	flex-direction: column-reverse;
+	margin-left: 10px;
+	align-items: flex-start;
+}
+
+.tooltop {
+	margin-top: 50px;
+}
+
+.tooltip-inner {
+	max-width: 200px;
+	padding: 3px 8px;
+	color: #fff;
+	text-align: center;
+	background-color: #000;
+	border-radius: 4px;
+	margin-left: 16px;
+}
+
+.btn-info {
+	color: #c31d1d;
+	background-color: #91a0a51f;
+	border-color: #2d3d42;
+	margin-top: 5px;
+	margin-bottom: 10px;
 }
