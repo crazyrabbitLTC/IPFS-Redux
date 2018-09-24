@@ -25,3 +25,4 @@ export default {
   FETCH_PRODUCT,
   SET_PRODUCT
 }
+
